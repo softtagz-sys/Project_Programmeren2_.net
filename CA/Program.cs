@@ -1,3 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using MagicTheGatheringManagement.Domain;
 
-Console.WriteLine("Hello, World!");
+namespace MagicTheGatheringManagement;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        var consoleUi = new ConsoleUi();
+        consoleUi.Run();
+    }
+}
