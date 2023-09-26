@@ -1,4 +1,8 @@
-﻿namespace MagicTheGatheringManagement.Domain;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace MagicTheGatheringManagement.Domain;
 
 public class ConsoleUi
 {

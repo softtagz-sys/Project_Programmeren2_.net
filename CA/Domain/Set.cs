@@ -1,4 +1,6 @@
-﻿namespace MagicTheGatheringManagement.Domain;
+﻿using System;
+
+namespace MagicTheGatheringManagement.Domain;
 
 public class Set
 {

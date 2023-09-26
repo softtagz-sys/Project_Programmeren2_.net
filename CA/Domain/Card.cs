@@ -1,4 +1,6 @@
-﻿namespace MagicTheGatheringManagement.Domain;
+﻿using System.Collections.Generic;
+
+namespace MagicTheGatheringManagement.Domain;
 
 public class Card
 {

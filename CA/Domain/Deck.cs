@@ -1,4 +1,7 @@
-﻿namespace MagicTheGatheringManagement.Domain;
+﻿using System;
+using System.Collections.Generic;
+
+namespace MagicTheGatheringManagement.Domain;
 
 public class Deck
 {
