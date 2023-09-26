@@ -2,18 +2,18 @@
 
 public class Set
 {
-    public Set(string name, int year, string description)
+    public Set(string name, String code, DateTime releaseDate)
     {
         Name = name;
-        Year = year;
-        Description = description;
+        Code = code;
+        ReleaseDate = releaseDate;
     }
     public string Name { get; set; }
-    public int Year { get; set; }
-    public string Description { get; set; }
+    public String Code { get; set; }
+    public DateTime ReleaseDate { get; set; }
 
     public override string ToString()
     {
-        return $"Set: {Name}, Year: {Year}, Description: {Description}";
+        return $"Set: {Name}, Code: {Code}, ReleaseDate: {ReleaseDate.ToShortDateString()}";
     }
 }

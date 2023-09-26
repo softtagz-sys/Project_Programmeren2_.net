@@ -2,14 +2,14 @@
 
 public class ConsoleUi
 {
-    private readonly List<Card> _cards;
     private readonly List<Set> _sets;
+    private readonly List<Card> _cards;
     private readonly List<Deck> _decks;
     
     public ConsoleUi()
     {
-        _cards = new List<Card>();
         _sets = new List<Set>();
+        _cards = new List<Card>();
         _decks = new List<Deck>();
     }
 
@@ -31,7 +31,7 @@ public class ConsoleUi
             Console.WriteLine("5) Show decks created after a specific date");
             Console.Write("Choice (0-5): ");
 
-            string choice = Console.ReadLine();
+            string? choice = Console.ReadLine();
 
             switch (choice)
             {
@@ -65,16 +65,49 @@ public class ConsoleUi
 
     private void Seed()
     {
-        Card dovinArchitectOfLaw = new Card(
-            "Dovin, Architect of Law",
-            CardType.Planeswalker,
+        _cards.Add(new Card(
+            "Elderwoorth Scion",
+            CardType.Creature,
+            new List<CardAbility> {CardAbility.Trample, CardAbility.Lifelink },
+            new List<CardColour> {CardColour.Green, CardColour.White },
             6,
-            1.84,
-            "",
-            new DateTime(2019, 01, 25),
-            true);
+            0.12,
+            "Spell you cast that target Elderwoorth Scion cost 2 less to cast. Spells your opponents cast that target Elderwoorth Scion cost 2 more to cast.",
+            true));
+        _cards.Add(new Card(
+            "Windstorm Drake",
+            CardType.Creature,
+            new List<CardAbility>{CardAbility.Flying},
+            new List<CardColour> { CardColour.Blue },
+            5,
+            0.08,
+            "Other creatures you control with flying get +1/+0.",
+            false));
+        _cards.Add(new Card(
+            "Unbreakable Formation",
+            CardType.Instant,
+            null!,
+            new List<CardColour> { CardColour.White },
+            3,
+            0.13,
+            "Creatures you control gain indestructible until end of turn. Addendum — If you cast this spell during your main phase, put a +1/+1 counter on each of those creatures and they gain vigilance until end of turn.",
+            false));
+        _cards.Add(new Card(
+            "Sol Ring",
+            CardType.Artifact,
+            null!,
+            new List<CardColour> { CardColour.Colourless },
+            1,
+            0.35,
+            "Tap: Add CC.",
+            true));
 
-        _cards.Add(dovinArchitectOfLaw);
+        _sets.Add(new Set("Commander2018", "C18", new DateTime(2018, 08, 10)));
+        _sets.Add(new Set("Jumpstart ", "JMP", new DateTime(2022, 12, 02)));
+        _sets.Add(new Set("Ravnica Allegiance", "RNA", new DateTime(2019, 01, 25)));
+        _sets.Add(new Set("Commander Masters", "CMM", new DateTime(2023, 08, 04)));
+        
+        //TODO: Add decks
     }
     
     private void ShowAllCards()

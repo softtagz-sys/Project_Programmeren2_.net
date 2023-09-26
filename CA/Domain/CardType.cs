@@ -2,18 +2,11 @@
 
 public enum CardType
 {
-    Artifact, 
-    Conspiracy, 
+    Artifact = 1, 
     Creature, 
-    Dungeon, 
     Enchantment, 
     Instant, 
     Land, 
-    Phenomenon, 
-    Plane, 
     Planeswalker, 
-    Scheme, 
     Sorcery, 
-    Tribal, 
-    Vanguard
 }
