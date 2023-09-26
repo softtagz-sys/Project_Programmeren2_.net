@@ -27,6 +27,6 @@ public class Card
 
     public override string ToString()
     {
-        return $"Card: {Name}, Type: {Type}, ManaCost: {ManaCost}, Price: {Price:C}, IsFoil: {IsFoil}";
+        return $"{Name}, Type: {Type}, ManaCost: {ManaCost}, Price: {Price:C}, {(IsFoil?"Foil edition":"Regular edition")}";
     }
 }

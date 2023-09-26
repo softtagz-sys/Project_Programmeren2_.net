@@ -1,6 +1,6 @@
 ﻿namespace MagicTheGatheringManagement.Domain;
 
-public enum CardType
+public enum CardType : byte
 {
     Artifact = 1, 
     Creature, 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace MagicTheGatheringManagement.Domain;
@@ -32,7 +33,7 @@ public class ConsoleUi
             Console.WriteLine("2) Show cards of a specific type");
             Console.WriteLine("3) Show all sets");
             Console.WriteLine("4) Show all decks");
-            Console.WriteLine("5) Show decks created after a specific date");
+            Console.WriteLine("5) Show decks with name and/or creation date");
             Console.Write("Choice (0-5): ");
 
             string? choice = Console.ReadLine();
@@ -55,7 +56,7 @@ public class ConsoleUi
                     ShowAllDecks();
                     break;
                 case "5":
-                    ShowDecksCreatedAfterDate();
+                    ShowDecksByNameAndOrDate();
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Please try again.");
@@ -111,7 +112,29 @@ public class ConsoleUi
         _sets.Add(new Set("Ravnica Allegiance", "RNA", new DateTime(2019, 01, 25)));
         _sets.Add(new Set("Commander Masters", "CMM", new DateTime(2023, 08, 04)));
         
-        //TODO: Add decks
+        _decks.Add( new Deck("Green-White Deck", new List<Card>
+        {
+            _cards[0],  // Elderwoorth Scion
+            _cards[2]   // Unbreakable Formation
+        }, DateTime.Now, "This is a green-white deck with powerful creatures."));
+
+        _decks.Add( new Deck("Blue Deck", new List<Card>
+        {
+            _cards[1],  // Windstorm Drake
+            _cards[3]   // Sol Ring
+        }, DateTime.Now, "A deck focused on flying creatures and artifacts."));
+
+        _decks.Add( new Deck("Red-Black Deck", new List<Card>
+        {
+            _cards[2],  // Unbreakable Formation
+            _cards[3]   // Sol Ring
+        }, DateTime.Now, "A deck with a mix of instant spells and artifacts."));
+
+        _decks.Add( new Deck("White Deck", new List<Card>
+        {
+            _cards[2],  // Unbreakable Formation
+            _cards[1]   // Windstorm Drake
+        }, DateTime.Now, "A deck with flying creatures and an instant spell."));
     }
     
     private void ShowAllCards()
@@ -123,31 +146,40 @@ public class ConsoleUi
             Console.WriteLine(card);
         }
     }
-
+    
     private void ShowCardsOfType()
     {
-        Console.Write("Enter card type (Creature, Spell, Artifact, etc.): ");
-        var cardTypeInput = Console.ReadLine();
-        if (Enum.TryParse(cardTypeInput, out CardType cardType))
+        Console.WriteLine("Card Types");
+        Console.WriteLine("==========");
+        foreach (var cardType in Enum.GetValues<CardType>())
         {
-            var matchingCards = _cards.Where(card => card.Type == cardType).ToList();
-            if (matchingCards.Any())
+            Console.WriteLine($"{(byte)cardType}) {cardType}");
+        }
+        Console.Write("Choice (1-7): ");
+        if (byte.TryParse(Console.ReadLine(), out byte choice))
+        {
+            if (Enum.IsDefined(typeof(CardType), choice))
             {
-                Console.WriteLine($"Cards of type {cardType}");
-                Console.WriteLine("=================");
-                foreach (var card in matchingCards)
-                {
-                    Console.WriteLine(card);
-                }
+                ShowCardsOfType((CardType)choice);
             }
             else
             {
-                Console.WriteLine("No cards of the specified type found.");
+                Console.WriteLine("Invalid choice. Please try again.");
             }
         }
         else
         {
-            Console.WriteLine("Invalid card type.");
+            Console.WriteLine("Invalid choice. Please try again.");
+        }
+    }
+
+    private void ShowCardsOfType(CardType cardType)
+    {
+        if (!Enum.IsDefined(typeof(CardType), cardType))
+            throw new InvalidEnumArgumentException(nameof(cardType), (int)cardType, typeof(CardType));
+        foreach (var card in _cards.Where(card => card.Type == cardType))
+        {
+            Console.WriteLine(card);
         }
     }
 
@@ -171,29 +203,17 @@ public class ConsoleUi
         }
     }
 
-    private void ShowDecksCreatedAfterDate()
+    private void ShowDecksByNameAndOrDate()
     {
-        Console.Write("Enter a date (yyyy/mm/dd): ");
-        if (DateTime.TryParse(Console.ReadLine(), out DateTime creationDate))
+        Console.WriteLine("Enter (part of) a name or leave blank");
+        string? name = Console.ReadLine();
+        
+        Console.WriteLine("Enter a full creation date (yyyy/mm/dd) or leave blank");
+        string? date = Console.ReadLine();
+
+        foreach (var deck in _decks.Where(card => name != null && (card.Name.Contains(name) || card.CreationDate.ToShortDateString() == date)))
         {
-            var matchingDecks = _decks.Where(deck => deck.CreationDate > creationDate).ToList();
-            if (matchingDecks.Any())
-            {
-                Console.WriteLine("Decks created after the specified date");
-                Console.WriteLine("=====================================");
-                foreach (var deck in matchingDecks)
-                {
-                    Console.WriteLine(deck);
-                }
-            }
-            else
-            {
-                Console.WriteLine("No decks created after the specified date found.");
-            }
-        }
-        else
-        {
-            Console.WriteLine("Invalid date format.");
+            Console.WriteLine(deck);
         }
     }
 }

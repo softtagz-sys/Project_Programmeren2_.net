@@ -12,6 +12,7 @@ public class Deck
         CreationDate = creationDate;
         Notes = notes;
     }
+
     public string Name { get; set; }
     public List<Card> Cards { get; set; }
     public DateTime CreationDate { get; set; }
