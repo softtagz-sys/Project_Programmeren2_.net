@@ -16,6 +16,7 @@ public class Set
 
     public override string ToString()
     {
-        return $"Set: {Name}, Code: {Code}, ReleaseDate: {ReleaseDate.ToShortDateString()}";
+        return $"\nSet: {Name}\nCode: {Code}\nRelease Date: {ReleaseDate.ToShortDateString()}";
     }
+
 }

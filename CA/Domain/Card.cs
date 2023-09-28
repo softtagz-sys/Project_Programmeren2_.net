@@ -27,6 +27,17 @@ public class Card
 
     public override string ToString()
     {
-        return $"{Name}, Type: {Type}, ManaCost: {ManaCost}, Price: {Price:C}, {(IsFoil?"Foil edition":"Regular edition")}";
+        string cardBorder = "--------------------------";
+        string nameLine = $"| {Name.ToUpper(),-22} |";
+        string typeLine = $"| Type: {Type,-22} |";
+        string manaCostLine = $"| ManaCost: {ManaCost,-22} |";
+        string priceLine = $"| Price: {Price,-22} |";
+        string editionLine = $"| {(IsFoil ? "Foil edition" : "Regular edition"),-22} |";
+
+        string card = $"\n{cardBorder}\n{nameLine}\n{typeLine}\n{manaCostLine}\n{priceLine}\n{editionLine}\n{cardBorder}";
+
+        return card;
     }
+
+
 }

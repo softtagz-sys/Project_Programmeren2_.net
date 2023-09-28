@@ -203,10 +203,10 @@ public class ConsoleUi
 
     private void ShowDecksByNameAndOrDate()
     {
-        Console.WriteLine("Enter (part of) a name or leave blank");
+        Console.Write("Enter (part of) a name or leave blank: ");
         string name = Console.ReadLine();
         
-        Console.WriteLine("Enter a full creation date (yyyy/mm/dd) or leave blank");
+        Console.Write("Enter a full creation date (yyyy/mm/dd) or leave blank: ");
         string date = Console.ReadLine();
 
         foreach (var deck in _decks.Where(card => name != null && (card.Name.Contains(name) || card.CreationDate.ToShortDateString() == date)))

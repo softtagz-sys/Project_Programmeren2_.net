@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace MagicTheGatheringManagement.Domain;
 
@@ -20,6 +21,16 @@ public class Deck
 
     public override string ToString()
     {
-        return $"Deck: {Name}, CreationDate: {CreationDate.ToShortDateString()}, Notes: {Notes}";
+        StringBuilder cardList = new StringBuilder();
+
+        foreach (Card card in Cards)
+        {
+            cardList.Append(card.Name + ", ");
+        }
+
+        string formattedCreationDate = CreationDate.ToShortDateString();
+
+        return $"\nDeck Name: {Name}\nCreated on: {formattedCreationDate}\nContains: {cardList}\nNotes: {Notes}";
     }
+
 }
