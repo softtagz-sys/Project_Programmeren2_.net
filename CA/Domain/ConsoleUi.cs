@@ -36,7 +36,7 @@ public class ConsoleUi
             Console.WriteLine("5) Show decks with name and/or creation date");
             Console.Write("Choice (0-5): ");
 
-            string? choice = Console.ReadLine();
+            string choice = Console.ReadLine();
 
             switch (choice)
             {
@@ -206,10 +206,10 @@ public class ConsoleUi
     private void ShowDecksByNameAndOrDate()
     {
         Console.WriteLine("Enter (part of) a name or leave blank");
-        string? name = Console.ReadLine();
+        string name = Console.ReadLine();
         
         Console.WriteLine("Enter a full creation date (yyyy/mm/dd) or leave blank");
-        string? date = Console.ReadLine();
+        string date = Console.ReadLine();
 
         foreach (var deck in _decks.Where(card => name != null && (card.Name.Contains(name) || card.CreationDate.ToShortDateString() == date)))
         {
