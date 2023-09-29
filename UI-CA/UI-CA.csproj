@@ -5,8 +5,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
-        <RootNamespace>MagicTheGatheringManagement</RootNamespace>
+        <RootNamespace>MagicTheGatheringManagement.UI-CA.CA</RootNamespace>
     </PropertyGroup>
-
 
 </Project>
