@@ -1,11 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
-        <RootNamespace>MagicTheGatheringManagement.BL</RootNamespace>
+        <AssemblyName>MTGM.BL</AssemblyName>
+        <RootNamespace>MTGM.BL</RootNamespace>
     </PropertyGroup>
-    
+
+    <ItemGroup>
+      <ProjectReference Include="..\DAL\DAL.csproj" />
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
 </Project>

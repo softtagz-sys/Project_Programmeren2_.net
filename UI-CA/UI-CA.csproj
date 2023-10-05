@@ -5,7 +5,17 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
-        <RootNamespace>MagicTheGatheringManagement.UI-CA.CA</RootNamespace>
+        <RootNamespace>MTGM.UI-CA.CA</RootNamespace>
+        <AssemblyName>MTGM.UI-CA.CA</AssemblyName>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BL\BL.csproj" />
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Domain\" />
+    </ItemGroup>
 
 </Project>
