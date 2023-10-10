@@ -6,13 +6,13 @@ namespace MTGM.DAL;
 public interface IRepository
 {
     public Card ReadCard(int id);
-    public List<Card> ReadAllCards();
-    public List<Card> ReadCardsOfType(CardType type);
+    public IEnumerable<Card> ReadAllCards();
+    public IEnumerable<Card> ReadCardsOfType(CardType type);
     public void CreateCard(Card card);
     
     public Deck ReadDeck(int id);
-    public List<Deck> ReadAllDecks();
-    public List<Deck> ReadDeckByNameAndCreationDate(Card card);
+    public IEnumerable<Deck> ReadAllDecks();
+    public IEnumerable<Deck> ReadDeckByNameAndCreationDate(String name, DateTime creationDate);
     public void CreateDeck(Deck deck);
     
 }

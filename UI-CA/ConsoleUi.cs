@@ -1,14 +1,22 @@
 ﻿using System.ComponentModel;
-using MTGM.BL.Domain;
+using MagicTheGatheringManagement.Domain;
+using MagicTheGatheringManagement.Extensions;
+using MTGM.BL;
 
 
 namespace MagicTheGatheringManagement;
 
 public class ConsoleUi
 {
+    private readonly IManager _manager;
+    
+    public ConsoleUi(IManager manager)
+    {
+        _manager = manager;
+    }
+    
     public void Run()
     {
-
         bool quit = false;
 
         while (!quit)
@@ -18,10 +26,9 @@ public class ConsoleUi
             Console.WriteLine("0) Quit");
             Console.WriteLine("1) Show all cards");
             Console.WriteLine("2) Show cards of a specific type");
-            Console.WriteLine("3) Show all sets");
-            Console.WriteLine("4) Show all decks");
-            Console.WriteLine("5) Show decks with name and/or creation date");
-            Console.Write("Choice (0-5): ");
+            Console.WriteLine("3) Show all decks");
+            Console.WriteLine("4) Show decks with name and/or creation date");
+            Console.Write("Choice (0-4): ");
 
             string choice = Console.ReadLine();
 
@@ -37,12 +44,9 @@ public class ConsoleUi
                     ShowCardsOfType();
                     break;
                 case "3":
-                    ShowAllSets();
-                    break;
-                case "4":
                     ShowAllDecks();
                     break;
-                case "5":
+                case "4":
                     ShowDecksByNameAndOrDate();
                     break;
                 default:
@@ -60,9 +64,12 @@ public class ConsoleUi
     {
         Console.WriteLine("All Cards");
         Console.WriteLine("=========");
-        foreach (var card in _cards)
+        foreach (var card in _manager.GetAllCards())
         {
-            Console.WriteLine(card);
+            if (card != null)
+            {
+                Console.WriteLine(card.GetString());
+            }
         }
     }
     
@@ -91,34 +98,34 @@ public class ConsoleUi
             Console.WriteLine("Invalid choice. Please try again.");
         }
     }
-
+    
     private void ShowCardsOfType(CardType cardType)
     {
         if (!Enum.IsDefined(typeof(CardType), cardType))
             throw new InvalidEnumArgumentException(nameof(cardType), (int)cardType, typeof(CardType));
-        foreach (var card in _cards.Where(card => card.Type == cardType))
+        foreach (var card in _manager.GetCardsOfType(cardType))
         {
-            Console.WriteLine(card);
+            Console.WriteLine(card.GetString());
         }
     }
 
     private void ShowAllSets()
     {
-        Console.WriteLine("All Sets");
-        Console.WriteLine("========");
-        foreach (var set in _sets)
-        {
-            Console.WriteLine(set);
-        }
+        // Console.WriteLine("All Sets");
+        // Console.WriteLine("========");
+        // foreach (var set in _manager.GetAllSets())
+        // {
+        //     Console.WriteLine(set);
+        // }
     }
 
     private void ShowAllDecks()
     {
         Console.WriteLine("All Decks");
         Console.WriteLine("=========");
-        foreach (var deck in _decks)
+        foreach (var deck in _manager.GetAllDecks())
         {
-            Console.WriteLine(deck);
+            Console.WriteLine(deck.GetString());
         }
     }
 
@@ -130,9 +137,9 @@ public class ConsoleUi
         Console.Write("Enter a full creation date (yyyy/mm/dd) or leave blank: ");
         string date = Console.ReadLine();
 
-        foreach (var deck in _decks.Where(card => name != null && (card.Name.Contains(name) || card.CreationDate.ToShortDateString() == date)))
+        foreach (var deck in _manager.GetDeckByNameAndCreationDate(name, Convert.ToDateTime(date)))
         {
-            Console.WriteLine(deck);
+            Console.WriteLine(deck.GetString());
         }
     }
 }

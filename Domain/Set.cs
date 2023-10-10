@@ -1,4 +1,5 @@
-﻿namespace MTGM.BL.Domain;
+﻿using MagicTheGatheringManagement.Domain;
+namespace MTGM.BL.Domain;
 
 public class Set
 {
@@ -16,10 +17,4 @@ public class Set
     public String Code { get; set; }
     public DateTime ReleaseDate { get; set; }
     public ICollection<Card> Cards { get; set; }
-
-    public override string ToString()
-    {
-        return $"\nSet: {Name}\nCode: {Code}\nRelease Date: {ReleaseDate.ToShortDateString()}";
-    }
-
 }
