@@ -2,6 +2,7 @@
 using MagicTheGatheringManagement.Domain;
 using MagicTheGatheringManagement.Extensions;
 using MTGM.BL;
+using MTGM.BL.Domain;
 
 
 namespace MagicTheGatheringManagement;
@@ -17,7 +18,7 @@ public class ConsoleUi
     
     public void Run()
     {
-        bool quit = false;
+        var quit = false;
 
         while (!quit)
         {
@@ -28,9 +29,11 @@ public class ConsoleUi
             Console.WriteLine("2) Show cards of a specific type");
             Console.WriteLine("3) Show all decks");
             Console.WriteLine("4) Show decks with name and/or creation date");
-            Console.Write("Choice (0-4): ");
+            Console.WriteLine("5) Add card");
+            Console.WriteLine("6) Add deck");
+            Console.Write("Choice (0-6): ");
 
-            string choice = Console.ReadLine();
+            var choice = Console.ReadLine();
 
             switch (choice)
             {
@@ -49,6 +52,12 @@ public class ConsoleUi
                 case "4":
                     ShowDecksByNameAndOrDate();
                     break;
+                case "5":
+                    AddCard();
+                    break;
+                case "6":
+                    AddDeck();
+                    break;
                 default:
                     Console.WriteLine("Invalid choice. Please try again.");
                     break;
@@ -58,8 +67,6 @@ public class ConsoleUi
             Console.ReadKey();
         }
     }
-    
-    
     private void ShowAllCards()
     {
         Console.WriteLine("All Cards");
@@ -142,4 +149,149 @@ public class ConsoleUi
             Console.WriteLine(deck.GetString());
         }
     }
+    
+   private void AddCard()
+    {
+        var cardAbilities = new List<CardAbility>();
+        var cardColours = new List<CardColour>();
+
+        Console.WriteLine("Name: ");
+        var name = Console.ReadLine();
+
+        // Enum values and a dictionary to map numbers to enum values
+        var cardTypes = Enum.GetValues(typeof(CardType));
+        var cardTypeMap = new Dictionary<int, CardType>();
+        for (int i = 0; i < cardTypes.Length; i++)
+        {
+            cardTypeMap[i + 1] = (CardType)cardTypes.GetValue(i);
+        }
+
+        Console.WriteLine("Choose a Card Type:");
+        foreach (var entry in cardTypeMap)
+        {
+            Console.WriteLine($"{entry.Key}) {entry.Value}");
+        }
+        if (int.TryParse(Console.ReadLine(), out var typeChoice) && cardTypeMap.ContainsKey(typeChoice))
+        {
+            var type = cardTypeMap[typeChoice];
+
+            var cardAbility = 0;
+            do
+            {
+                Console.WriteLine("Card Abilities (0=stop, 1=Deathtouch, 2=Defender, ...): ");
+                if (int.TryParse(Console.ReadLine(), out cardAbility) && Enum.IsDefined(typeof(CardAbility), cardAbility))
+                {
+                    cardAbilities.Add((CardAbility)cardAbility);
+                }
+                else if (cardAbility != 0)
+                {
+                    Console.WriteLine("Invalid choice. Please try again.");
+                }
+            } while (cardAbility != 0);
+
+            var cardColour = 0;
+            do
+            {
+                Console.WriteLine("Card Colours (0=stop, 1=White, 2=Blue, 3=Black, ...): ");
+                if (int.TryParse(Console.ReadLine(), out cardColour) && Enum.IsDefined(typeof(CardColour), cardColour))
+                {
+                    cardColours.Add((CardColour)cardColour);
+                }
+                else if (cardColour != 0)
+                {
+                    Console.WriteLine("Invalid choice. Please try again.");
+                }
+            } while (cardColour != 0);
+
+            Console.WriteLine("Mana Cost: ");
+            if (!int.TryParse(Console.ReadLine(), out var manaCost))
+            {
+                Console.WriteLine("Invalid input for Mana Cost. Please enter a valid number.");
+                return;
+            }
+
+            Console.WriteLine("Price: ");
+            if (!double.TryParse(Console.ReadLine(), out var price))
+            {
+                Console.WriteLine("Invalid input for Price. Please enter a valid number.");
+                return;
+            }
+
+            Console.WriteLine("Description: ");
+            var description = Console.ReadLine();
+
+            Console.WriteLine("Is Foil (true/false): ");
+            if (!bool.TryParse(Console.ReadLine(), out var isFoil))
+            {
+                Console.WriteLine("Invalid input for Is Foil. Please enter 'true' or 'false'.");
+                return;
+            }
+
+            // Assuming _manager.AddCard method accepts all the required parameters
+            _manager.AddCard(name, type, cardAbilities, cardColours, manaCost, price, description, isFoil);
+            
+        }
+        else
+        {
+            Console.WriteLine("Invalid choice. Please try again.");
+        }
+    }
+
+
+    
+   private void AddDeck()
+   {
+       Console.WriteLine("Deck Name: ");
+       var deckName = Console.ReadLine();
+
+       Console.WriteLine("Select Cards for the Deck (Enter card numbers, 0 to finish):");
+
+       // Fetch all available cards from the _manager
+       var availableCards = _manager.GetAllCards();
+
+       var enumerable = availableCards.ToList();
+       for (int i = 0; i < enumerable.Count(); i++)
+       {
+           Console.WriteLine($"{i + 1}) {enumerable[i].Name} - {enumerable[i].Type}");
+       }
+
+       var selectedCards = new List<Card>();
+
+       while (true)
+       {
+           if (int.TryParse(Console.ReadLine(), out int cardChoice))
+           {
+               if (cardChoice == 0)
+               {
+                   break;
+               }
+               else if (cardChoice >= 1 && cardChoice <= enumerable.Count)
+               {
+                   // Add the selected card to the list of selected cards
+                   selectedCards.Add(enumerable[cardChoice - 1]);
+                   Console.WriteLine($"Added {enumerable[cardChoice - 1].Name} to the deck.");
+               }
+               else
+               {
+                   Console.WriteLine("Invalid choice. Please select a valid card or enter 0 to finish.");
+               }
+           }
+           else
+           {
+               Console.WriteLine("Invalid input. Please enter a number.");
+           }
+       }
+
+       var creationDate = DateTime.Now;
+
+       Console.WriteLine("Notes: ");
+       var notes = Console.ReadLine();
+
+       // Create a deck with the selected cards and add it to the _manager
+       _manager.AddDeck(deckName, selectedCards, creationDate, notes);
+
+       Console.WriteLine("Deck created and added to the manager successfully!");
+   }
+
+
 }

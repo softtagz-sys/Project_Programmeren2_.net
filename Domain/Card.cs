@@ -1,9 +1,11 @@
-﻿using MagicTheGatheringManagement.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using MagicTheGatheringManagement.Domain;
 
 namespace MTGM.BL.Domain;
 
 public class Card
 {
+    
     public Card(string name, CardType type, List<CardAbility> cardAbilities, List<CardColour> cardColours, int manaCost,
         double price, string description, bool isFoil)
     {
@@ -19,12 +21,19 @@ public class Card
     }
     private static int _cardId = 1;
     public int Id { get; set; }
+    
+    [Required]
+    [MinLength(1, ErrorMessage = "Name must be at least 1 character long")]
     public string Name { get; set; }
     public CardType Type { get; set; }
+    
     public ICollection<CardAbility> CardAbilities { get; set; }
     public ICollection<CardColour> CardColours { get; set; }
     public int ManaCost { get; set; }
+    
+    [Required]
+    [Range(0, double.MaxValue, ErrorMessage = "Price must be a positive value.")]
     public double Price { get; set; }
-    public string Description { get; set; }
+    public string? Description { get; set; }
     public bool IsFoil { get; set; }
 }
