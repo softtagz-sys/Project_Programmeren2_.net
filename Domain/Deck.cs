@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.Metrics;
 using System.Text;
 using MagicTheGatheringManagement.Domain;
@@ -7,6 +8,10 @@ namespace MTGM.BL.Domain;
 
 public class Deck : IValidatableObject
 {
+    public Deck()
+    {
+        
+    }
     public Deck(string name, List<Card> cards, DateTime creationDate, string notes)
     {
         Name = name;
@@ -20,6 +25,7 @@ public class Deck : IValidatableObject
     [Required]
     [MinLength(1, ErrorMessage = "Name must be at least 1 character long")]
     public string Name { get; set; }
+    [NotMapped]
     public ICollection<Card> Cards { get; set; }
     [Required]
     public DateTime CreationDate { get; set; }

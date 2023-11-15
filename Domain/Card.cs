@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MagicTheGatheringManagement.Domain;
 
 namespace MTGM.BL.Domain;
@@ -6,6 +7,10 @@ namespace MTGM.BL.Domain;
 public class Card
 {
     
+    public Card()
+    {
+        
+    }
     public Card(string name, CardType type, List<CardAbility> cardAbilities, List<CardColour> cardColours, int manaCost,
         double price, string description, bool isFoil)
     {
@@ -26,8 +31,9 @@ public class Card
     [MinLength(1, ErrorMessage = "Name must be at least 1 character long")]
     public string Name { get; set; }
     public CardType Type { get; set; }
-    
+    [NotMapped]
     public ICollection<CardAbility> CardAbilities { get; set; }
+    [NotMapped]
     public ICollection<CardColour> CardColours { get; set; }
     public int ManaCost { get; set; }
     

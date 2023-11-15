@@ -163,7 +163,7 @@ public class ConsoleUi
         var cardTypeMap = new Dictionary<int, CardType>();
         for (int i = 0; i < cardTypes.Length; i++)
         {
-            cardTypeMap[i + 1] = (CardType)cardTypes.GetValue(i);
+            cardTypeMap[i + 1] = (CardType)cardTypes.GetValue(i)!;
         }
 
         Console.WriteLine("Choose a Card Type:");
