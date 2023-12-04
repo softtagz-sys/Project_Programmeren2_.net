@@ -8,19 +8,19 @@ public class Set
     {
         
     }
-    public Set(int id, string name, String code, DateTime releaseDate, ICollection<Card> cards)
+    public Set(String name, String code, DateTime releaseDate, SetEntry[] cards = null)
     {
-        Id = id;
+        Id = _setId++;
         Name = name;
         Code = code;
         ReleaseDate = releaseDate;
-        Cards = cards;
+        Cards = cards ?? new SetEntry[0];
     }
     
+    private static int _setId = 1;
     public int Id { get; set; }
     public string Name { get; set; }
     public String Code { get; set; }
     public DateTime ReleaseDate { get; set; }
-    [NotMapped]
-    public ICollection<Card> Cards { get; set; }
+    public ICollection<SetEntry> Cards { get; set; }
 }

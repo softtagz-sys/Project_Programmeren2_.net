@@ -5,17 +5,21 @@ namespace MTGM.DAL;
 
 public class InMemoryRepository : IRepository
 {
-    private static List<Set> _sets;
-    private static List<Card> _cards;
-    private static List<Deck> _decks;
-
+    private static IList<Set> _sets;
+    private static IList<SetEntry> _setEntries;
+    private static IList<Card> _cards;
+    private static IList<DeckEntry> _deckEntries;
+    private static IList<Deck> _decks;
+    
     private int _cardId = 1;
     private int _deckId = 1;
     
     public InMemoryRepository()
     {
         _sets = new List<Set>();
+        _setEntries = new List<SetEntry>();
         _cards = new List<Card>();
+        _deckEntries = new List<DeckEntry>();
         _decks = new List<Deck>();
     }
     
@@ -50,9 +54,9 @@ public class InMemoryRepository : IRepository
         return _decks;
     }
 
-    public List<Deck> ReadDeckByNameAndCreationDate(Card card)
+    public List<Deck> ReadDeckByNameAndCreationDate(Deck deck)
     {
-        throw new NotImplementedException();
+        return _decks.Where(d => d.Name == deck.Name && d.CreationDate == deck.CreationDate).ToList();
     }
 
     public IEnumerable<Deck> ReadDeckByNameAndCreationDate(string name, DateTime creationDate)
@@ -65,7 +69,42 @@ public class InMemoryRepository : IRepository
         deck.Id = _deckId++;
         _decks.Add(deck);
     }
-    
+
+    public void CreateDeckEntry(DeckEntry deckEntry)
+    {
+        _deckEntries.Add(deckEntry);
+    }
+
+    public IEnumerable<DeckEntry> ReadAllDeckEntries()
+    {
+        return _deckEntries;
+    }
+
+    public void CreateSet(Set set)
+    {
+        _sets.Add(set);
+    }
+
+    public IEnumerable<DeckEntry> ReadDeckEntries()
+    {
+        return _deckEntries;
+    }
+
+    public void CreateSetEntry(SetEntry setEntry)
+    {
+        _setEntries.Add(setEntry);
+    }
+
+    public IEnumerable<SetEntry> ReadAllSetEntries()
+    {
+        return _setEntries;
+    }
+
+    public IEnumerable<SetEntry> ReadSetEntries()
+    {
+        return _setEntries;
+    }
+
     public static void Seed()
     {
         _cards.Add( new Card("Elderwoorth Scion",
@@ -102,68 +141,64 @@ public class InMemoryRepository : IRepository
             true));
 
         _sets.Add(new Set(
-            1,
             "Commander2018",
             "C18",
-            new DateTime(2018, 08, 10),
-            new List<Card>
-            {
-                _cards[0], // Elderwoorth Scion
-                _cards[3]  // Sol Ring
-            }));
+            new DateTime(2018, 08, 10)));
         _sets.Add(new Set(
-            2, 
             "Jumpstart ", 
             "JMP", 
-            new DateTime(2022, 12, 02),
-            new List<Card>
-            {
-                _cards[1], // Windstorm Drake
-                _cards[2]  // Unbreakable Formation
-            }));
+            new DateTime(2022, 12, 02)));
         _sets.Add(new Set(
-            3, 
             "Ravnica Allegiance", 
             "RNA", 
-            new DateTime(2019, 01, 25),
-            new List<Card>
-            {
-                _cards[1], // Windstorm Drake
-                _cards[3]  // Sol Ring
-            }));
+            new DateTime(2019, 01, 25)));
         _sets.Add(new Set(
-            4, 
             "Commander Masters", 
             "CMM", 
-            new DateTime(2023, 08, 04),
-            new List<Card>
-            {
-                _cards[0], // Elderwoorth Scion
-                _cards[2]  // Unbreakable Formation
-            }));
+            new DateTime(2023, 08, 04)));
         
-        _decks.Add( new Deck("Green-White Deck", new List<Card>
-        {
-            _cards[0],  // Elderwoorth Scion
-            _cards[2]   // Unbreakable Formation
-        }, DateTime.Now, "This is a green-white deck with powerful creatures."));
+        _decks.Add(new Deck(
+            "Green-White Deck", 
+                DateTime.Now, 
+                "This is a green-white deck with powerful creatures."));
 
-        _decks.Add( new Deck("Blue Deck", new List<Card>
-        {
-            _cards[1],  // Windstorm Drake
-            _cards[3]   // Sol Ring
-        }, DateTime.Now, "A deck focused on flying creatures and artifacts."));
+        _decks.Add( new Deck(
+            "Blue Deck",
+            DateTime.Now, 
+            "A deck focused on flying creatures and artifacts."));
 
-        _decks.Add( new Deck("Red-Black Deck", new List<Card>
-        {
-            _cards[2],  // Unbreakable Formation
-            _cards[3]   // Sol Ring
-        }, DateTime.Now, "A deck with a mix of instant spells and artifacts."));
+        _decks.Add( new Deck(
+            "Red-Black Deck", 
+            DateTime.Now, 
+            "A deck with a mix of instant spells and artifacts."));
 
-        _decks.Add( new Deck("White Deck", new List<Card>
-        {
-            _cards[2],  // Unbreakable Formation
-            _cards[1]   // Windstorm Drake
-        }, DateTime.Now, "A deck with flying creatures and an instant spell."));
+        _decks.Add( new Deck(
+            "White Deck", 
+            DateTime.Now, 
+            "A deck with flying creatures and an instant spell."));
+        
+        _deckEntries.Add(new DeckEntry(_cards[0], _decks[0], 3, DateTime.Now));
+        _deckEntries.Add(new DeckEntry(_cards[1], _decks[0], 3, DateTime.Now));
+
+        _deckEntries.Add(new DeckEntry(_cards[2], _decks[1], 3, DateTime.Now));
+        _deckEntries.Add(new DeckEntry(_cards[3], _decks[1], 3, DateTime.Now));
+
+        _deckEntries.Add(new DeckEntry(_cards[0], _decks[2], 3, DateTime.Now));
+        _deckEntries.Add(new DeckEntry(_cards[2], _decks[2], 3, DateTime.Now));
+
+        _deckEntries.Add(new DeckEntry(_cards[1], _decks[3], 3, DateTime.Now));
+        _deckEntries.Add(new DeckEntry(_cards[3], _decks[3], 3, DateTime.Now));
+        
+        _setEntries.Add(new SetEntry(_cards[0], _sets[0], DateTime.Now));
+        _setEntries.Add(new SetEntry(_cards[1], _sets[0], DateTime.Now));
+
+        _setEntries.Add(new SetEntry(_cards[2], _sets[1], DateTime.Now));
+        _setEntries.Add(new SetEntry(_cards[3], _sets[1], DateTime.Now));
+
+        _setEntries.Add(new SetEntry(_cards[0], _sets[2], DateTime.Now));
+        _setEntries.Add(new SetEntry(_cards[2], _sets[2], DateTime.Now));
+
+        _setEntries.Add(new SetEntry(_cards[1], _sets[3], DateTime.Now));
+        _setEntries.Add(new SetEntry(_cards[3], _sets[3], DateTime.Now));
     }
 }

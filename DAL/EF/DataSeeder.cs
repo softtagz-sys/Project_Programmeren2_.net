@@ -1,4 +1,5 @@
-﻿using MagicTheGatheringManagement.Domain;
+﻿using System.Collections;
+using MagicTheGatheringManagement.Domain;
 using Microsoft.EntityFrameworkCore;
 using MTGM.BL.Domain;
 
@@ -7,13 +8,17 @@ namespace MTGM.DAL.EF;
 public static class DataSeeder
 {
     private static readonly IList<Set> _sets;
+    private static readonly IList<SetEntry> _setEntries;
     private static readonly IList<Card> _cards;
+    private static readonly IList<DeckEntry> _deckEntries;
     private static readonly IList<Deck> _decks;
     
     static DataSeeder()
     {
         _sets = new List<Set>();
+        _setEntries = new List<SetEntry>();
         _cards = new List<Card>();
+        _deckEntries = new List<DeckEntry>();
         _decks = new List<Deck>();
     }
     
@@ -23,6 +28,7 @@ public static class DataSeeder
         {
             throw new ArgumentNullException(nameof(context));
         }
+        
         
         _cards.Add( new Card("Elderwoorth Scion",
             CardType.Creature,
@@ -58,69 +64,67 @@ public static class DataSeeder
             true));
 
         _sets.Add(new Set(
-            1,
             "Commander2018",
             "C18",
-            new DateTime(2018, 08, 10),
-            new List<Card>
-            {
-                _cards[0], // Elderwoorth Scion
-                _cards[3]  // Sol Ring
-            }));
+            new DateTime(2018, 08, 10)));
         _sets.Add(new Set(
-            2, 
             "Jumpstart ", 
             "JMP", 
-            new DateTime(2022, 12, 02),
-            new List<Card>
-            {
-                _cards[1], // Windstorm Drake
-                _cards[2]  // Unbreakable Formation
-            }));
+            new DateTime(2022, 12, 02)));
         _sets.Add(new Set(
-            3, 
             "Ravnica Allegiance", 
             "RNA", 
-            new DateTime(2019, 01, 25),
-            new List<Card>
-            {
-                _cards[1], // Windstorm Drake
-                _cards[3]  // Sol Ring
-            }));
+            new DateTime(2019, 01, 25)));
         _sets.Add(new Set(
-            4, 
             "Commander Masters", 
             "CMM", 
-            new DateTime(2023, 08, 04),
-            new List<Card>
-            {
-                _cards[0], // Elderwoorth Scion
-                _cards[2]  // Unbreakable Formation
-            }));
+            new DateTime(2023, 08, 04)));
         
-        _decks.Add( new Deck("Green-White Deck", new List<Card>
-        {
-            _cards[0],  // Elderwoorth Scion
-            _cards[2]   // Unbreakable Formation
-        }, DateTime.Now, "This is a green-white deck with powerful creatures."));
+        _decks.Add(new Deck(
+            "Green-White Deck", 
+                DateTime.Now, 
+                "This is a green-white deck with powerful creatures."));
 
-        _decks.Add( new Deck("Blue Deck", new List<Card>
-        {
-            _cards[1],  // Windstorm Drake
-            _cards[3]   // Sol Ring
-        }, DateTime.Now, "A deck focused on flying creatures and artifacts."));
+        _decks.Add( new Deck(
+            "Blue Deck",
+            DateTime.Now, 
+            "A deck focused on flying creatures and artifacts."));
 
-        _decks.Add( new Deck("Red-Black Deck", new List<Card>
-        {
-            _cards[2],  // Unbreakable Formation
-            _cards[3]   // Sol Ring
-        }, DateTime.Now, "A deck with a mix of instant spells and artifacts."));
+        _decks.Add( new Deck(
+            "Red-Black Deck", 
+            DateTime.Now, 
+            "A deck with a mix of instant spells and artifacts."));
 
-        _decks.Add( new Deck("White Deck", new List<Card>
-        {
-            _cards[2],  // Unbreakable Formation
-            _cards[1]   // Windstorm Drake
-        }, DateTime.Now, "A deck with flying creatures and an instant spell."));
+        _decks.Add( new Deck(
+            "White Deck", 
+            DateTime.Now, 
+            "A deck with flying creatures and an instant spell."));
+        
+        _deckEntries.Add(new DeckEntry(_cards[0], _decks[0], 3, DateTime.Now));
+        _deckEntries.Add(new DeckEntry(_cards[1], _decks[0], 3, DateTime.Now));
+
+        _deckEntries.Add(new DeckEntry(_cards[2], _decks[1], 3, DateTime.Now));
+        _deckEntries.Add(new DeckEntry(_cards[3], _decks[1], 3, DateTime.Now));
+
+        _deckEntries.Add(new DeckEntry(_cards[0], _decks[2], 3, DateTime.Now));
+        _deckEntries.Add(new DeckEntry(_cards[2], _decks[2], 3, DateTime.Now));
+
+        _deckEntries.Add(new DeckEntry(_cards[1], _decks[3], 3, DateTime.Now));
+        _deckEntries.Add(new DeckEntry(_cards[3], _decks[3], 3, DateTime.Now));
+        
+        _setEntries.Add(new SetEntry(_cards[0], _sets[0], DateTime.Now));
+        _setEntries.Add(new SetEntry(_cards[1], _sets[0], DateTime.Now));
+
+        _setEntries.Add(new SetEntry(_cards[2], _sets[1], DateTime.Now));
+        _setEntries.Add(new SetEntry(_cards[3], _sets[1], DateTime.Now));
+;
+
+        _setEntries.Add(new SetEntry(_cards[0], _sets[2], DateTime.Now));
+        _setEntries.Add(new SetEntry(_cards[2], _sets[2], DateTime.Now));
+;
+
+        _setEntries.Add(new SetEntry(_cards[1], _sets[3], DateTime.Now));
+        _setEntries.Add(new SetEntry(_cards[3], _sets[3], DateTime.Now));
 
         foreach (Card card in _cards)
         {
@@ -135,6 +139,16 @@ public static class DataSeeder
         foreach (Deck deck in _decks)
         {
             context.Decks.Add(deck);
+        }
+
+        foreach (DeckEntry deckEntry in _deckEntries)
+        {
+            context.DeckEntries.Add(deckEntry);
+        }
+        
+        foreach (SetEntry setEntry in _setEntries)
+        {
+            context.SetEntries.Add(setEntry);
         }
         
         context.SaveChanges();

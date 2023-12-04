@@ -226,8 +226,7 @@ public class ConsoleUi
                 Console.WriteLine("Invalid input for Is Foil. Please enter 'true' or 'false'.");
                 return;
             }
-
-            // Assuming _manager.AddCard method accepts all the required parameters
+            
             _manager.AddCard(name, type, cardAbilities, cardColours, manaCost, price, description, isFoil);
             
         }

@@ -12,7 +12,7 @@ public class Card
         
     }
     public Card(string name, CardType type, List<CardAbility> cardAbilities, List<CardColour> cardColours, int manaCost,
-        double price, string description, bool isFoil)
+        double price, string description, bool isFoil, List<DeckEntry> deck = null, List<SetEntry> set = null)
     {
         Name = name;
         Type = type;
@@ -23,6 +23,8 @@ public class Card
         Description = description;
         IsFoil = isFoil;
         Id = _cardId++;
+        Decks = deck ?? new List<DeckEntry>();
+        Sets = set ?? new List<SetEntry>();
     }
     private static int _cardId = 1;
     public int Id { get; set; }
@@ -31,9 +33,9 @@ public class Card
     [MinLength(1, ErrorMessage = "Name must be at least 1 character long")]
     public string Name { get; set; }
     public CardType Type { get; set; }
-    [NotMapped]
+    public ICollection<DeckEntry> Decks { get; set; }
+    public ICollection<SetEntry> Sets { get; set; }
     public ICollection<CardAbility> CardAbilities { get; set; }
-    [NotMapped]
     public ICollection<CardColour> CardColours { get; set; }
     public int ManaCost { get; set; }
     

@@ -9,9 +9,9 @@ public static class DeckExtentions
     {
         StringBuilder cardList = new StringBuilder();
 
-        foreach (Card card in deck.Cards)
+        foreach (DeckEntry card in deck.Cards)
         {
-            cardList.Append(card.Name + ", ");
+            cardList.Append(card.Card.Name + ", ");
         }
 
         string formattedCreationDate = deck.CreationDate.ToShortDateString();

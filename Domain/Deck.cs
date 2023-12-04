@@ -12,21 +12,22 @@ public class Deck : IValidatableObject
     {
         
     }
-    public Deck(string name, List<Card> cards, DateTime creationDate, string notes)
+    public Deck(string name, DateTime creationDate, string notes, List<DeckEntry> cards = null)
     {
         Name = name;
-        Cards = cards;
         CreationDate = creationDate;
         Notes = notes;
         Id = _deckId++;
+        Cards = cards ?? new List<DeckEntry>();
     }
+    
     private static int _deckId = 1;
     public int Id { get; set; }
     [Required]
     [MinLength(1, ErrorMessage = "Name must be at least 1 character long")]
     public string Name { get; set; }
     [NotMapped]
-    public ICollection<Card> Cards { get; set; }
+    public ICollection<DeckEntry> Cards { get; set; }
     [Required]
     public DateTime CreationDate { get; set; }
     public string Notes { get; set; }

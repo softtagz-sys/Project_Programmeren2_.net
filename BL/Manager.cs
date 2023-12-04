@@ -55,10 +55,47 @@ public class Manager : IManager
 
     public Deck AddDeck(string name, List<Card> cards, DateTime creationDate, string notes)
     {
-        Deck deck = new Deck(name, cards, creationDate, notes);
+        Deck deck = new Deck(name, creationDate, notes);
         ValidateObject(deck);
         _repository.CreateDeck(deck);
         return deck;
+    }
+
+    public DeckEntry AddDeckEntry(Deck deck, Card card, int amount, DateTime creationDate)
+    {
+        DeckEntry deckEntry = new DeckEntry(card, deck, amount, creationDate);
+        ValidateObject(deckEntry);
+        _repository.CreateDeckEntry(deckEntry);
+        return deckEntry;
+    }
+
+    public IEnumerable<DeckEntry> GetAllDeckEntries()
+    {
+        return _repository.ReadAllDeckEntries();
+    }
+
+    public Set AddSet(string name, string code, DateTime releaseDate)
+    {
+        Set set = new Set(name, code, releaseDate);
+        ValidateObject(set);
+        _repository.CreateSet(set);
+        return set;
+    }
+
+    public SetEntry AddSetEntry(Card card, Set set, DateTime addedOn)
+    {
+        SetEntry setEntry = new SetEntry(card, set, addedOn);
+        ValidateObject(setEntry);
+        _repository.CreateSetEntry(setEntry);
+        return setEntry;
+    }
+
+    public DeckEntry AddDeckEntry(Card card, Deck deck, int quantity, DateTime dt)
+    {
+        DeckEntry deckEntry = new DeckEntry(card, deck, quantity, dt);
+        ValidateObject(deckEntry);
+        _repository.CreateDeckEntry(deckEntry);
+        return deckEntry;
     }
     
     private void ValidateObject(Object o)

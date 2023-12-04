@@ -69,5 +69,43 @@ namespace MTGM.DAL.EF
             _context.Decks.Add(deck);
             _context.SaveChanges();
         }
+
+        public void CreateDeckEntry(DeckEntry deckEntry)
+        {
+            _context.DeckEntries.Add(deckEntry);
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<DeckEntry> ReadAllDeckEntries()
+        {
+            return _context.DeckEntries.ToList();
+        }
+
+        public void CreateSet(Set set)
+        {
+            _context.Sets.Add(set);
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<DeckEntry> ReadDeckEntries()
+        {
+            return _context.DeckEntries.ToList();
+        }
+
+        public void CreateSetEntry(SetEntry setEntry)
+        {
+            _context.SetEntries.Add(setEntry);
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<SetEntry> ReadAllSetEntries()
+        {
+            return _context.SetEntries.ToList();
+        }
+
+        public IEnumerable<SetEntry> ReadSetEntries()
+        {
+            return _context.SetEntries.ToList();
+        }
     }
 }
