@@ -8,13 +8,13 @@ public class Set
     {
         
     }
-    public Set(String name, String code, DateTime releaseDate, SetEntry[] cards = null)
+    public Set(String name, String code, DateTime releaseDate, List<SetEntry> cards = null)
     {
         Id = _setId++;
         Name = name;
         Code = code;
         ReleaseDate = releaseDate;
-        Cards = cards ?? new SetEntry[0];
+        Cards = cards ?? new List<SetEntry>();
     }
     
     private static int _setId = 1;

@@ -6,6 +6,8 @@ public class SetEntry
 {
     public Card Card { get; set; }
     public Set Set { get; set; }
+    
+    public SetEntry() { }
 
     public SetEntry(Card card, Set set, DateTime addedOn)
     {

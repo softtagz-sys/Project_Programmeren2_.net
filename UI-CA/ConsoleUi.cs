@@ -4,7 +4,6 @@ using MagicTheGatheringManagement.Extensions;
 using MTGM.BL;
 using MTGM.BL.Domain;
 
-
 namespace MagicTheGatheringManagement;
 
 public class ConsoleUi
@@ -118,7 +117,7 @@ public class ConsoleUi
 
     private void ShowAllSets()
     {
-        // Console.WriteLine("All Sets");
+        // Console.WriteLine("All SetEntries");
         // Console.WriteLine("========");
         // foreach (var set in _manager.GetAllSets())
         // {
@@ -128,7 +127,7 @@ public class ConsoleUi
 
     private void ShowAllDecks()
     {
-        Console.WriteLine("All Decks");
+        Console.WriteLine("All DeckEntries");
         Console.WriteLine("=========");
         foreach (var deck in _manager.GetAllDecks())
         {
@@ -152,8 +151,8 @@ public class ConsoleUi
     
    private void AddCard()
     {
-        var cardAbilities = new List<CardAbility>();
-        var cardColours = new List<CardColour>();
+        var cardAbilities = new CardAbility();
+        var cardColours = new CardColour();
 
         Console.WriteLine("Name: ");
         var name = Console.ReadLine();
@@ -176,32 +175,26 @@ public class ConsoleUi
             var type = cardTypeMap[typeChoice];
 
             var cardAbility = 0;
-            do
+            Console.WriteLine("Card Abilities (1=Deathtouch, 2=Defender, ...): ");
+            if (int.TryParse(Console.ReadLine(), out cardAbility) && Enum.IsDefined(typeof(CardAbility), cardAbility))
             {
-                Console.WriteLine("Card Abilities (0=stop, 1=Deathtouch, 2=Defender, ...): ");
-                if (int.TryParse(Console.ReadLine(), out cardAbility) && Enum.IsDefined(typeof(CardAbility), cardAbility))
-                {
-                    cardAbilities.Add((CardAbility)cardAbility);
-                }
-                else if (cardAbility != 0)
-                {
-                    Console.WriteLine("Invalid choice. Please try again.");
-                }
-            } while (cardAbility != 0);
+                cardAbilities = (CardAbility)cardAbility;
+            }
+            else if (cardAbility != 0)
+            {
+                Console.WriteLine("Invalid choice. Please try again.");
+            }
 
             var cardColour = 0;
-            do
+            Console.WriteLine("Card Colours (1=White, 2=Blue, 3=Black, ...): ");
+            if (int.TryParse(Console.ReadLine(), out cardColour) && Enum.IsDefined(typeof(CardColour), cardColour))
             {
-                Console.WriteLine("Card Colours (0=stop, 1=White, 2=Blue, 3=Black, ...): ");
-                if (int.TryParse(Console.ReadLine(), out cardColour) && Enum.IsDefined(typeof(CardColour), cardColour))
-                {
-                    cardColours.Add((CardColour)cardColour);
-                }
-                else if (cardColour != 0)
-                {
-                    Console.WriteLine("Invalid choice. Please try again.");
-                }
-            } while (cardColour != 0);
+                cardColours =(CardColour)cardColour;
+            }
+            else if (cardColour != 0)
+            {
+                Console.WriteLine("Invalid choice. Please try again.");
+            }
 
             Console.WriteLine("Mana Cost: ");
             if (!int.TryParse(Console.ReadLine(), out var manaCost))

@@ -29,7 +29,7 @@ public class Manager : IManager
         return _repository.ReadCardsOfType(type);
     }
 
-    public Card AddCard(string name, CardType type, List<CardAbility> cardAbilities, List<CardColour> cardColours, int manaCost, double price,
+    public Card AddCard(string name, CardType type, CardAbility cardAbilities, CardColour cardColours, int manaCost, double price,
         string description, bool isFoil)
     {
         Card card = new Card(name, type, cardAbilities, cardColours, manaCost, price, description, isFoil);

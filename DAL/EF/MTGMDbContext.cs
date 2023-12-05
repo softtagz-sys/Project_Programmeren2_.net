@@ -24,7 +24,7 @@ public class MtgmDbContext : DbContext
         }
     }
     
-    public bool CreateDatabase(bool wipeDatabase = false)
+    public bool CreateDatabase(bool wipeDatabase = true)
     {
         if (wipeDatabase)
         {
@@ -36,17 +36,25 @@ public class MtgmDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Card>()
+            .Property(c => c.CardAbility)
+            .HasConversion<int>();
+        
         modelBuilder.Entity<Deck>()
             .HasMany(d => d.Cards)
             .WithOne(de => de.Deck);
 
         modelBuilder.Entity<Card>()
-            .HasMany(d => d.Decks)
+            .HasMany(c => c.DeckEntries)
             .WithOne(de => de.Card);
-        
+
         modelBuilder.Entity<Set>()
             .HasMany(s => s.Cards)
-            .WithOne(c => c.Set);
+            .WithOne(se => se.Set);
+
+        modelBuilder.Entity<Card>()
+            .HasMany(c => c.SetEntries)
+            .WithOne(se => se.Card);
     }
 
 }

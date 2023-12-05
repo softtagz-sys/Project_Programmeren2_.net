@@ -11,20 +11,20 @@ public class Card
     {
         
     }
-    public Card(string name, CardType type, List<CardAbility> cardAbilities, List<CardColour> cardColours, int manaCost,
+    public Card(string name, CardType type, CardAbility? cardAbility, CardColour cardColour, int manaCost,
         double price, string description, bool isFoil, List<DeckEntry> deck = null, List<SetEntry> set = null)
     {
         Name = name;
         Type = type;
-        CardAbilities = cardAbilities;
-        CardColours = cardColours;
+        CardAbility = cardAbility;
+        CardColour = cardColour;
         ManaCost = manaCost;
         Price = price;
         Description = description;
         IsFoil = isFoil;
         Id = _cardId++;
-        Decks = deck ?? new List<DeckEntry>();
-        Sets = set ?? new List<SetEntry>();
+        DeckEntries = deck ?? new List<DeckEntry>();
+        SetEntries = set ?? new List<SetEntry>();
     }
     private static int _cardId = 1;
     public int Id { get; set; }
@@ -33,10 +33,10 @@ public class Card
     [MinLength(1, ErrorMessage = "Name must be at least 1 character long")]
     public string Name { get; set; }
     public CardType Type { get; set; }
-    public ICollection<DeckEntry> Decks { get; set; }
-    public ICollection<SetEntry> Sets { get; set; }
-    public ICollection<CardAbility> CardAbilities { get; set; }
-    public ICollection<CardColour> CardColours { get; set; }
+    public ICollection<DeckEntry> DeckEntries { get; set; }
+    public ICollection<SetEntry> SetEntries { get; set; }
+    public CardAbility? CardAbility { get; set; }
+    public CardColour CardColour { get; set; }
     public int ManaCost { get; set; }
     
     [Required]
