@@ -53,6 +53,11 @@ public class Manager : IManager
         return _repository.ReadDeckByNameAndCreationDate(name, creationDate);
     }
 
+    public IEnumerable<Deck> GetAllDecksWithCards()
+    {
+        return _repository.ReadAllDecksWithCards();
+    }
+
     public Deck AddDeck(string name, List<Card> cards, DateTime creationDate, string notes)
     {
         Deck deck = new Deck(name, creationDate, notes);
@@ -69,9 +74,24 @@ public class Manager : IManager
         return deckEntry;
     }
 
-    public IEnumerable<DeckEntry> GetAllDeckEntries()
+    public void RemoveDeckEntry(long cardId, long deckId)
     {
-        return _repository.ReadAllDeckEntries();
+        _repository.DeleteDeckEntry(cardId, deckId);
+    }
+
+    public Set GetSet(int id)
+    {
+        return _repository.ReadSet(id);
+    }
+
+    public IEnumerable<Set> GetAllSets()
+    {
+        return _repository.ReadAllSets();
+    }
+
+    public IEnumerable<Set> GetAllSetsWithCard()
+    {
+        return _repository.ReadAllSetsWithCard();
     }
 
     public Set AddSet(string name, string code, DateTime releaseDate)
@@ -90,14 +110,11 @@ public class Manager : IManager
         return setEntry;
     }
 
-    public DeckEntry AddDeckEntry(Card card, Deck deck, int quantity, DateTime dt)
+    public void RemoveSetEntry(long cardId, long setId)
     {
-        DeckEntry deckEntry = new DeckEntry(card, deck, quantity, dt);
-        ValidateObject(deckEntry);
-        _repository.CreateDeckEntry(deckEntry);
-        return deckEntry;
+        _repository.DeleteSetEntry(cardId, setId);
     }
-    
+
     private void ValidateObject(Object o)
     {
         var validationContext = new ValidationContext(o);

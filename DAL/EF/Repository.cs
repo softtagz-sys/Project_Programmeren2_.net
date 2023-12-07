@@ -64,6 +64,23 @@ namespace MTGM.DAL.EF
             return query.ToList();
         }
 
+        public IEnumerable<Deck> ReadAllDecksWithCards()
+        {
+            return _context.Decks
+                .Include(d => d.Cards)
+                .ThenInclude(c => c.Card)
+                .ToList();
+        }
+
+        public IEnumerable<Deck> ReadCardsOfDeck(long deckId)
+        {
+            return _context.Decks
+                .Include(d => d.Cards)
+                .ThenInclude(c => c.Card)
+                .Where(d => d.Id == deckId)
+                .ToList();
+        }
+
         public void CreateDeck(Deck deck)
         {
             _context.Decks.Add(deck);
@@ -76,9 +93,38 @@ namespace MTGM.DAL.EF
             _context.SaveChanges();
         }
 
-        public IEnumerable<DeckEntry> ReadAllDeckEntries()
+        public void DeleteDeckEntry(long cardId, long deckId)
         {
-            return _context.DeckEntries.ToList();
+            var deckEntry = _context.DeckEntries.FirstOrDefault(de => de.Card.Id == cardId && de.Deck.Id == deckId);
+            if (deckEntry != null) _context.DeckEntries.Remove(deckEntry);
+            _context.SaveChanges();
+        }
+
+        public Set ReadSet(int id)
+        {
+            return _context.Sets.FirstOrDefault(s => s.Id == id);
+        }
+
+        public IEnumerable<Set> ReadAllSets()
+        {
+            return _context.Sets.ToList();
+        }
+
+        public IEnumerable<Set> ReadAllSetsWithCard()
+        {
+            return _context.Sets
+                .Include(c => c.Cards)
+                .ThenInclude(c => c.Card)
+                .ToList();
+        }
+
+        public IEnumerable<Set> ReadCardsOfSet(long setId)
+        {
+            return _context.Sets
+                .Include(c => c.Cards)
+                .ThenInclude(c => c.Card)
+                .Where(s => s.Id == setId)
+                .ToList();
         }
 
         public void CreateSet(Set set)
@@ -87,25 +133,17 @@ namespace MTGM.DAL.EF
             _context.SaveChanges();
         }
 
-        public IEnumerable<DeckEntry> ReadDeckEntries()
-        {
-            return _context.DeckEntries.ToList();
-        }
-
         public void CreateSetEntry(SetEntry setEntry)
         {
             _context.SetEntries.Add(setEntry);
             _context.SaveChanges();
         }
 
-        public IEnumerable<SetEntry> ReadAllSetEntries()
+        public void DeleteSetEntry(long cardId, long setId)
         {
-            return _context.SetEntries.ToList();
-        }
-
-        public IEnumerable<SetEntry> ReadSetEntries()
-        {
-            return _context.SetEntries.ToList();
+            var setEntry = _context.SetEntries.FirstOrDefault(se => se.Card.Id == cardId && se.Set.Id == setId);
+            if (setEntry != null) _context.SetEntries.Remove(setEntry);
+            _context.SaveChanges();
         }
     }
 }

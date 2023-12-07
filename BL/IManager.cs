@@ -13,9 +13,15 @@ public interface IManager
     public Deck GetDeck(int id);
     public IEnumerable<Deck> GetAllDecks();
     public IEnumerable<Deck> GetDeckByNameAndCreationDate(String name, DateTime creationDate);
+    public IEnumerable<Deck> GetAllDecksWithCards();
     public Deck AddDeck(string name, List<Card> cards, DateTime creationDate, string notes);
     public DeckEntry AddDeckEntry(Deck deck, Card card, int amount, DateTime creationDate);
-    public IEnumerable<DeckEntry> GetAllDeckEntries();
+    public void RemoveDeckEntry(long cardId, long deckId);
+    
+    public Set GetSet(int id);
+    public IEnumerable<Set> GetAllSets();
+    public IEnumerable<Set> GetAllSetsWithCard();
     public Set AddSet(String name, String code, DateTime releaseDate);
     public SetEntry AddSetEntry(Card card, Set set, DateTime addedOn);
+    public void RemoveSetEntry(long cardId, long setId);
 }

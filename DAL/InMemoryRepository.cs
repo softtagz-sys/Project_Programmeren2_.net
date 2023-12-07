@@ -64,6 +64,16 @@ public class InMemoryRepository : IRepository
         return _decks.Where(card => name != null && (card.Name.Contains(name) || card.CreationDate.ToShortDateString() == creationDate.ToShortDateString())).ToList();
     }
 
+    public IEnumerable<Deck> ReadAllDecksWithCards()
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerable<Deck> ReadCardsOfDeck(long deckId)
+    {
+        throw new NotImplementedException();
+    }
+
     public void CreateDeck(Deck deck)
     {
         deck.Id = _deckId++;
@@ -75,9 +85,29 @@ public class InMemoryRepository : IRepository
         _deckEntries.Add(deckEntry);
     }
 
-    public IEnumerable<DeckEntry> ReadAllDeckEntries()
+    public void DeleteDeckEntry(long cardId, long deckId)
     {
-        return _deckEntries;
+        throw new NotImplementedException();
+    }
+
+    public Set ReadSet(int id)
+    {
+        return _sets.FirstOrDefault(set => set.Id == id);
+    }
+
+    public IEnumerable<Set> ReadAllSets()
+    {
+        return _sets;
+    }
+
+    public IEnumerable<Set> ReadAllSetsWithCard()
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerable<Set> ReadCardsOfSet(long setId)
+    {
+        throw new NotImplementedException();
     }
 
     public void CreateSet(Set set)
@@ -85,24 +115,14 @@ public class InMemoryRepository : IRepository
         _sets.Add(set);
     }
 
-    public IEnumerable<DeckEntry> ReadDeckEntries()
-    {
-        return _deckEntries;
-    }
-
     public void CreateSetEntry(SetEntry setEntry)
     {
         _setEntries.Add(setEntry);
     }
 
-    public IEnumerable<SetEntry> ReadAllSetEntries()
+    public void DeleteSetEntry(long cardId, long setId)
     {
-        return _setEntries;
-    }
-
-    public IEnumerable<SetEntry> ReadSetEntries()
-    {
-        return _setEntries;
+        throw new NotImplementedException();
     }
 
     public static void Seed()

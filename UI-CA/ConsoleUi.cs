@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.Net.NetworkInformation;
+using System.Security.AccessControl;
 using MagicTheGatheringManagement.Domain;
 using MagicTheGatheringManagement.Extensions;
 using MTGM.BL;
@@ -26,10 +28,16 @@ public class ConsoleUi
             Console.WriteLine("0) Quit");
             Console.WriteLine("1) Show all cards");
             Console.WriteLine("2) Show cards of a specific type");
-            Console.WriteLine("3) Show all decks");
-            Console.WriteLine("4) Show decks with name and/or creation date");
-            Console.WriteLine("5) Add card");
-            Console.WriteLine("6) Add deck");
+            Console.WriteLine("3) Show all sets");
+            Console.WriteLine("4) Show all decks");
+            Console.WriteLine("5) Show decks with name and/or creation date");
+            Console.WriteLine("6) Add card");
+            Console.WriteLine("7) Add deck");
+            Console.WriteLine("8) Add set");
+            Console.WriteLine("9) Add card to deck");
+            Console.WriteLine("10) Add card to set");
+            Console.WriteLine("11) Remove card from deck");
+            Console.WriteLine("12) Remove card from set");
             Console.Write("Choice (0-6): ");
 
             var choice = Console.ReadLine();
@@ -46,16 +54,34 @@ public class ConsoleUi
                     ShowCardsOfType();
                     break;
                 case "3":
-                    ShowAllDecks();
+                    ShowAllSets();
                     break;
                 case "4":
-                    ShowDecksByNameAndOrDate();
+                    ShowAllDecks();
                     break;
                 case "5":
-                    AddCard();
+                    ShowDecksByNameAndOrDate();
                     break;
                 case "6":
+                    AddCard();
+                    break;
+                case "7":
                     AddDeck();
+                    break;
+                case "8":
+                    AddSet();
+                    break;
+                case "9":
+                    AddCardToDeck();
+                    break;
+                case "10":
+                    AddCardToSet();
+                    break;
+                case "11":
+                    RemoveCardFromSet();
+                    break;
+                case "12":
+                    RemoveCardFromDeck();
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Please try again.");
@@ -66,6 +92,7 @@ public class ConsoleUi
             Console.ReadKey();
         }
     }
+    
     private void ShowAllCards()
     {
         Console.WriteLine("All Cards");
@@ -117,21 +144,24 @@ public class ConsoleUi
 
     private void ShowAllSets()
     {
-        // Console.WriteLine("All SetEntries");
-        // Console.WriteLine("========");
-        // foreach (var set in _manager.GetAllSets())
-        // {
-        //     Console.WriteLine(set);
-        // }
+        Console.WriteLine("All Sets");
+        Console.WriteLine("========");
+        foreach (var set in _manager.GetAllSetsWithCard())
+        {
+            Console.WriteLine(set);
+        }
     }
 
     private void ShowAllDecks()
     {
-        Console.WriteLine("All DeckEntries");
+        Console.WriteLine("All Decks");
         Console.WriteLine("=========");
-        foreach (var deck in _manager.GetAllDecks())
+        foreach (var deck in _manager.GetAllDecksWithCards())
         {
-            Console.WriteLine(deck.GetString());
+            if (deck != null)
+            {
+                Console.WriteLine(deck.GetString());
+            }
         }
     }
 
@@ -151,7 +181,6 @@ public class ConsoleUi
     
    private void AddCard()
     {
-        var cardAbilities = new CardAbility();
         var cardColours = new CardColour();
 
         Console.WriteLine("Name: ");
@@ -164,6 +193,13 @@ public class ConsoleUi
         {
             cardTypeMap[i + 1] = (CardType)cardTypes.GetValue(i)!;
         }
+        var cardAbilty = new CardAbility();
+        var cardAbilities = Enum.GetValues(typeof(CardAbility));
+        var cardAbiltyMap = new Dictionary<int, CardAbility>();
+        for (int i = 0; i < cardAbilities.Length; i++)
+        {
+            cardAbiltyMap[i + 1] = (CardAbility)cardAbilities.GetValue(i)!;
+        }
 
         Console.WriteLine("Choose a Card Type:");
         foreach (var entry in cardTypeMap)
@@ -173,17 +209,22 @@ public class ConsoleUi
         if (int.TryParse(Console.ReadLine(), out var typeChoice) && cardTypeMap.ContainsKey(typeChoice))
         {
             var type = cardTypeMap[typeChoice];
-
-            var cardAbility = 0;
-            Console.WriteLine("Card Abilities (1=Deathtouch, 2=Defender, ...): ");
-            if (int.TryParse(Console.ReadLine(), out cardAbility) && Enum.IsDefined(typeof(CardAbility), cardAbility))
+            
+            var chosenAbility = 0;
+            Console.WriteLine("Choose a Card Ability (0=None):");
+            foreach (var entry in cardAbiltyMap)
             {
-                cardAbilities = (CardAbility)cardAbility;
+                Console.WriteLine($"{entry.Key}) {entry.Value}");
             }
-            else if (cardAbility != 0)
+            if (int.TryParse(Console.ReadLine(), out chosenAbility) && cardAbiltyMap.ContainsKey(chosenAbility))
+            {
+                cardAbilty = (CardAbility)chosenAbility;
+            }
+            else if (chosenAbility != 0)
             {
                 Console.WriteLine("Invalid choice. Please try again.");
             }
+            
 
             var cardColour = 0;
             Console.WriteLine("Card Colours (1=White, 2=Blue, 3=Black, ...): ");
@@ -220,7 +261,7 @@ public class ConsoleUi
                 return;
             }
             
-            _manager.AddCard(name, type, cardAbilities, cardColours, manaCost, price, description, isFoil);
+            _manager.AddCard(name, type, cardAbilty, cardColours, manaCost, price, description, isFoil);
             
         }
         else
@@ -284,6 +325,214 @@ public class ConsoleUi
 
        Console.WriteLine("Deck created and added to the manager successfully!");
    }
+   
+   private void AddSet()
+   {
+         Console.WriteLine("Set Name: ");
+         var setName = Console.ReadLine();
+    
+         Console.WriteLine("Set Code: ");
+         var setCode = Console.ReadLine();
+    
+         Console.WriteLine("Release Date: ");
+         var releaseDate = Console.ReadLine();
+    
+         _manager.AddSet(setName, setCode, Convert.ToDateTime(releaseDate));
+    
+         Console.WriteLine("Set created and added to the manager successfully!");
+   }
+
+   private void AddCardToDeck()
+   {
+       Console.WriteLine("Select Deck to add card to (Enter deck number):");
+       var decks = _manager.GetAllDecks();
+       foreach (Deck deck in decks)
+       {
+           Console.WriteLine($"[{deck.Id}] {deck.Name}");
+       }
+
+       int deckChoice;
+       while (true)
+       {
+           if (int.TryParse(Console.ReadLine(), out deckChoice))
+           {
+               if (decks.Any(deck => deck.Id == deckChoice))
+               {
+                   break;
+               }
+           }
+           Console.WriteLine("Invalid input. Please enter a valid deck number:");
+       }
+
+       Console.WriteLine("Select Card to add to deck (Enter card number):");
+       var cards = _manager.GetAllCards();
+       foreach (Card card in cards)
+       {
+           Console.WriteLine($"[{card.Id}] {card.Name}");
+       }
+
+       int cardChoice;
+       while (true)
+       {
+           if (int.TryParse(Console.ReadLine(), out cardChoice))
+           {
+               if (cards.Any(card => card.Id == cardChoice))
+               {
+                   break;
+               }
+           }
+           Console.WriteLine("Invalid input. Please enter a valid card number:");
+       }
+
+       Console.WriteLine("Select amount of cards to add to deck (Enter amount):");
+       int amountChoice;
+       while (true)
+       {
+           if (int.TryParse(Console.ReadLine(), out amountChoice) && amountChoice > 0)
+           {
+               break;
+           }
+           Console.WriteLine("Invalid input. Please enter a valid positive number:");
+       }
+
+       _manager.AddDeckEntry(
+           _manager.GetDeck(deckChoice),
+           _manager.GetCard(cardChoice),
+           amountChoice,
+           DateTime.Now
+       );
+   }
+
+   private void AddCardToSet()
+   {
+         Console.WriteLine("Select Set to add card to (Enter set number):");
+         var sets = _manager.GetAllSets();
+         foreach (Set set in sets)
+         {
+              Console.WriteLine($"[{set.Id}] {set.Name}");
+         }
+    
+         int setChoice;
+         while (true)
+         {
+              if (int.TryParse(Console.ReadLine(), out setChoice))
+              {
+                if (sets.Any(set => set.Id == setChoice))
+                {
+                     break;
+                }
+              }
+              Console.WriteLine("Invalid input. Please enter a valid set number:");
+         }
+    
+         Console.WriteLine("Select Card to add to set (Enter card number):");
+         var cards = _manager.GetAllCards();
+         foreach (Card card in cards)
+         {
+              Console.WriteLine($"[{card.Id}] {card.Name}");
+         }
+    
+         int cardChoice;
+         while (true)
+         {
+              if (int.TryParse(Console.ReadLine(), out cardChoice))
+              {
+                if (cards.Any(card => card.Id == cardChoice))
+                {
+                     break;
+                }
+              }
+              Console.WriteLine("Invalid input. Please enter a valid card number:");
+         }
+    
+         _manager.AddSetEntry(
+              _manager.GetCard(cardChoice),
+              _manager.GetSet(setChoice),
+              DateTime.Now
+         );
+   }
+
+   private void RemoveCardFromSet()
+   {
+        Console.WriteLine("Select Set to remove card from (Enter set number):");
+        var sets = _manager.GetAllSets();
+        foreach (Set set in sets)
+        {
+            Console.WriteLine($"[{set.Id}] {set.Name}");
+        }
+        
+        int setChoice;
+        while (true)
+        {
+            if (int.TryParse(Console.ReadLine(), out setChoice))
+            {
+                if (sets.Any(set => set.Id == setChoice))
+                {
+                    break;
+                }
+            }
+            Console.WriteLine("Invalid input. Please enter a valid set number:");
+        }
+        
+        Console.WriteLine("Select Card to remove from set (Enter card number):");
+        var cards = _manager.GetAllCards();
+        int cardChoice;
+        while (true)
+        {
+            if (int.TryParse(Console.ReadLine(), out cardChoice))
+            {
+                if (cards.Any(card => card.Id == cardChoice))
+                {
+                    break;
+                }
+            }
+            Console.WriteLine("Invalid input. Please enter a valid card number:");
+        }
+        
+        _manager.RemoveSetEntry(cardChoice, setChoice);
+   }
+
+   private void RemoveCardFromDeck()
+   {
+        Console.WriteLine("Select Deck to remove card from (Enter deck number):");
+        var decks = _manager.GetAllDecks();
+        foreach (Deck deck in decks)
+        {
+            Console.WriteLine($"[{deck.Id}] {deck.Name}");
+        }
+        
+        int deckChoice;
+        while (true)
+        {
+            if (int.TryParse(Console.ReadLine(), out deckChoice))
+            {
+                if (decks.Any(deck => deck.Id == deckChoice))
+                {
+                    break;
+                }
+            }
+            Console.WriteLine("Invalid input. Please enter a valid deck number:");
+        }
+        
+        Console.WriteLine("Select Card to remove from deck (Enter card number):");
+        var cards = _manager.GetAllCards();
+        int cardChoice;
+        while (true)
+        {
+            if (int.TryParse(Console.ReadLine(), out cardChoice))
+            {
+                if (cards.Any(card => card.Id == cardChoice))
+                {
+                    break;
+                }
+            }
+            Console.WriteLine("Invalid input. Please enter a valid card number:");
+        }
+       
+        
+        _manager.RemoveDeckEntry(cardChoice, deckChoice);
+   }
+
 
 
 }
