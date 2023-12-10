@@ -2,9 +2,27 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>UI_MVC</RootNamespace>
+        <RootNamespace>UI_MVC.UI.MVC</RootNamespace>
+        <AssemblyName>UI-MVC.UI.MVC</AssemblyName>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.12" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BL\BL.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Pages\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Views\Card\Add.cshtml" />
+      <AdditionalFiles Include="Views\Card\Index.cshtml" />
+    </ItemGroup>
 
 </Project>

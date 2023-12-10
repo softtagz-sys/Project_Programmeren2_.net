@@ -1,0 +1,40 @@
+﻿@using MTGM.BL.Domain
+@model IEnumerable<MTGM.BL.Domain.Card>
+
+@{
+    ViewData["Title"] = "All Cards";
+}
+
+<div class="container">
+    <h1>All Cards</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>name</th>
+            <th>Type</th>
+            <th>CardAbility</th>
+            <th>CardColour</th>
+            <th>ManaCost</th>
+            <th>IsFoil</th>
+            <th></th>
+        </tr>
+        @foreach (Card card in Model)
+        {
+            <tr>
+                <td>@(card.Name ?? "unknown")</td>
+                <td>@card.Type.ToString()</td>
+                <td>@(card.CardAbility?.ToString() ?? "unknown")</td>
+                <td>@card.CardColour.ToString()</td>
+                <td>@(card.ManaCost)</td>
+                @if (card.IsFoil)
+                {
+                    <td>yes</td>
+                }
+                else
+                {
+                    <td>no</td>   
+                }
+                <td><a asp-area="" asp-controller="Card" asp-action="Details">details</a></td>
+            </tr>
+        }
+    </table>
+</div>
