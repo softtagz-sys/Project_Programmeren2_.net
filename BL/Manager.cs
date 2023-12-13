@@ -29,6 +29,21 @@ public class Manager : IManager
         return _repository.ReadCardsOfType(type);
     }
 
+    public Card getCardWithDecks(int id)
+    {
+        return _repository.ReadCardWithDecks(id);
+    }
+
+    public Card getCardWithSets(int id)
+    {
+        return _repository.ReadCardWithSets(id);
+    }
+
+    public Card getCardWithSetsAndDecks(int id)
+    {
+        return _repository.ReadCardWithDecksAndSets(id);
+    }
+
     public Card AddCard(string name, CardType type, CardAbility cardAbilities, CardColour cardColours, int manaCost, double price,
         string description, bool isFoil)
     {

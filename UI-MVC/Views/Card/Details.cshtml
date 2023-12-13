@@ -1,8 +1,100 @@
-﻿@model MTGM.BL.Domain.Card
+﻿@using MTGM.BL.Domain
+@model Card
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Card Details";
     Layout = "_Layout";
 }
+@{
+    Card card = Model;
+}
 
-<h2>title</h2>
+<h1>Card Details</h1>
+<section class="my-3">
+    <div class="mb-3 row">
+        <label for="title-label" class="col-sm-2 fw-bold">Id</label>
+        <span id="title-label" class="col-sm-10">@Model.Id</span>
+    </div>
+    <div class="mb-3 row">
+        <label for="name-label" class="col-sm-2 fw-bold">Name</label>
+        <span id="name-label" class="col-sm-10">@Model.Name</span>
+    </div>
+    <div class="mb-3 row">
+        <label for="type-label" class="col-sm-2 fw-bold">Type</label>
+        <span id="type-label" class="col-sm-10">@Model.Type</span>
+    </div>
+    <div class="mb-3 row">
+        <label for="card-ability-label" class="col-sm-2 fw-bold">CardAbility</label>
+        <span id="card-ability-label" class="col-sm-10">@(Model.CardAbility?.ToString() ?? "unknown")</span>
+    </div>
+    <div class="mb-3 row">
+        <label for="card-colour-label" class="col-sm-2 fw-bold">CardColour</label>
+        <span id="card-colour-label" class="col-sm-10">@Model.CardColour.ToString()</span>
+    </div>
+    <div class="mb-3 row">
+        <label for="mana-cost-label" class="col-sm-2 fw-bold">ManaCost</label>
+        <span id="mana-cost-label" class="col-sm-10">@Model.ManaCost</span>
+    </div>
+    <div class="mb-3 row">
+        <label for="is-foil-label" class="col-sm-2 fw-bold">IsFoil</label>
+        @if (card.IsFoil)
+        {
+            <span id="is-foil-label" class="col-sm-10">yes</span>
+        }
+        else
+        {
+            <span id="is-foil-label" class="col-sm-10">no</span>
+        }
+    </div>
+    <div class="mb-3 row">
+        <label for="description-label" class="col-sm-2 fw-bold">Description</label>
+        <span id="description-label" class="col-sm-10">@(Model.Description ?? "unknown")</span>
+    </div>
+</section>
+<section>
+    <h2>Decks</h2>
+    <table class="table">
+        <th>Order</th>
+        <th>Deckname</th>
+        <th>Quantity</th>
+        <th>AddedOn</th>
+        
+        @if (Model.DeckEntries != null)
+        {
+            foreach (DeckEntry deckEntry in Model.DeckEntries)
+            {
+                if (deckEntry.Deck != null)
+                {
+                    <tr>
+                        <td>#@deckEntry.Deck.Id</td>
+                        <td>@deckEntry.Deck.Name</td>
+                        <td>@deckEntry.Quantity</td>
+                        <td>@deckEntry.AddedOn</td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+</section>
+<section>
+    <h2>Sets</h2>
+    <table class="table">
+        <th>Order</th>
+        <th>Setname</th>
+        <th>AddedOn</th>
+        @if(Model.SetEntries != null)
+        {
+            foreach (SetEntry setEntry in Model.SetEntries)
+            {
+                if (setEntry.Set != null)
+                {
+                    <tr>
+                        <td>#@setEntry.Set.Id</td>
+                        <td>@setEntry.Set.Name</td>
+                        <td>@setEntry.AddedOn</td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+</section>

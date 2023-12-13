@@ -38,6 +38,21 @@ public class InMemoryRepository : IRepository
         return _cards.Where(card => card != null && card.Type == type).ToList();
     }
 
+    public Card ReadCardWithDecks(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Card ReadCardWithSets(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Card ReadCardWithDecksAndSets(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public void CreateCard(Card card)
     {
         card.Id = _cardId++;

@@ -31,6 +31,32 @@ namespace MTGM.DAL.EF
             return _context.Cards.Where(c => c.Type == type).ToList();
         }
 
+        public Card ReadCardWithDecks(int id)
+        {
+            return _context.Cards
+                .Include(c => c.DeckEntries)
+                .ThenInclude(de => de.Deck)
+                .Single(c => c.Id == id);
+        }
+
+        public Card ReadCardWithSets(int id)
+        {
+            return _context.Cards
+                .Include(c => c.SetEntries)
+                .ThenInclude(se => se.Set)
+                .Single(c => c.Id == id);
+        }
+
+        public Card ReadCardWithDecksAndSets(int id)
+        {
+            return _context.Cards
+                .Include(c => c.DeckEntries)
+                .ThenInclude(de => de.Deck)
+                .Include(c => c.SetEntries)
+                .ThenInclude(se => se.Set)
+                .Single(c => c.Id == id);
+        }
+
         public void CreateCard(Card card)
         {
             _context.Cards.Add(card);

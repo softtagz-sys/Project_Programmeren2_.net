@@ -9,6 +9,9 @@ public interface IRepository
     public Card ReadCard(int id);
     public IEnumerable<Card> ReadAllCards();
     public IEnumerable<Card> ReadCardsOfType(CardType type);
+    public Card ReadCardWithDecks(int id);
+    public Card ReadCardWithSets(int id);
+    public Card ReadCardWithDecksAndSets(int id);
     public void CreateCard(Card card);
     
     public Deck ReadDeck(int id);

@@ -23,7 +23,7 @@ public class CardController : Controller
     }
     public IActionResult Details(int id)
     {
-        return View(_manager.GetCard(id));
+        return View(_manager.getCardWithSetsAndDecks(id));
     }
     
     
