@@ -1,0 +1,26 @@
+﻿@model MTGM.BL.Domain.Set
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h1>Set Details</h1>
+<section class="my-3">
+    <div class="mb-3 row">
+        <label for="title-label" class="col-sm-2 fw-bold">Id</label>
+        <span id="title-label" class="col-sm-10">@Model.Id</span>
+    </div>
+    <div class="mb-3 row">
+        <label for="name-label" class="col-sm-2 fw-bold">Name</label>
+        <span id="name-label" class="col-sm-10">@Model.Name</span>
+    </div>
+    <div class="mb-3 row">
+        <label for="code-label" class="col-sm-2 fw-bold">Code</label>
+        <span id="code-label" class="col-sm-10">@Model.Code</span>
+    </div>
+    <div class="mb-3 row">
+        <label for="release-date-label" class="col-sm-2 fw-bold">Release Date</label>
+        <span id="release-date-label" class="col-sm-10">@Model.ReleaseDate</span>
+    </div>
+</section>

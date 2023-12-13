@@ -4,8 +4,8 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>disable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>UI_MVC.UI.MVC</RootNamespace>
-        <AssemblyName>UI-MVC.UI.MVC</AssemblyName>
+        <RootNamespace>MTGM.UI.MVC</RootNamespace>
+        <AssemblyName>MTGM.UI.MVC</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,12 +17,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Pages\" />
+      <AdditionalFiles Include="Views\Card\Add.cshtml" />
+      <AdditionalFiles Include="Views\Card\Index.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Views\Card\Add.cshtml" />
-      <AdditionalFiles Include="Views\Card\Index.cshtml" />
+      <Folder Include="Pages\" />
     </ItemGroup>
 
 </Project>

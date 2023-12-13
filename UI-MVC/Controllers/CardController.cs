@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MTGM.BL;
 
-namespace UI_MVC.Controllers;
+namespace MTGM.UI.MVC.Controllers;
 
 public class CardController : Controller
 {

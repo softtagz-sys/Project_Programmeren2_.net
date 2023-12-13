@@ -58,7 +58,7 @@
         <th>Deckname</th>
         <th>Quantity</th>
         <th>AddedOn</th>
-        
+        <th></th>
         @if (Model.DeckEntries != null)
         {
             foreach (DeckEntry deckEntry in Model.DeckEntries)
@@ -70,6 +70,7 @@
                         <td>@deckEntry.Deck.Name</td>
                         <td>@deckEntry.Quantity</td>
                         <td>@deckEntry.AddedOn</td>
+                        <td><a asp-area="" asp-controller="Deck" asp-action="Details" asp-route-id="@deckEntry.Deck.Id">details</a></td>
                     </tr>
                 }
             }
@@ -81,7 +82,9 @@
     <table class="table">
         <th>Order</th>
         <th>Setname</th>
+        <th>Code</th>
         <th>AddedOn</th>
+        <th></th>
         @if(Model.SetEntries != null)
         {
             foreach (SetEntry setEntry in Model.SetEntries)
@@ -91,7 +94,9 @@
                     <tr>
                         <td>#@setEntry.Set.Id</td>
                         <td>@setEntry.Set.Name</td>
+                        <td>@setEntry.Set.Code</td>
                         <td>@setEntry.AddedOn</td>
+                        <td><a asp-area="" asp-controller="Set" asp-action="Details" asp-route-id="@setEntry.Set.Id">details</a></td>
                     </tr>
                 }
             }

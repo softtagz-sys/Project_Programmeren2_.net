@@ -1,0 +1,28 @@
+﻿@model MTGM.BL.Domain.Deck
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h1>Deck Details</h1>
+<section class="my-3">
+    <div class="mb-3 row">
+        <label for="title-label" class="col-sm-2 fw-bold">Id</label>
+        <span id="title-label" class="col-sm-10">@Model.Id</span>
+    </div>
+    <div class="mb-3 row">
+        <label for="name-label" class="col-sm-2 fw-bold">Name</label>
+        <span id="name-label" class="col-sm-10">@Model.Name</span>
+    </div>
+    <div class="mb-3 row">
+        <label for="notes-label" class="col-sm-2 fw-bold">Notes</label>
+        <span id="notes-label" class="col-sm-10">@Model.Notes</span>
+    </div>
+    <div class="mb-3 row">
+        <label for="creation-date-label" class="col-sm-2 fw-bold">CreationDate</label>
+        <span id="creation-date-label" class="col-sm-10">@Model.CreationDate</span>
+    </div>
+</section>
+
+
