@@ -22,7 +22,7 @@
             <tr>
                 <td>@(card.Name ?? "unknown")</td>
                 <td>@card.Type.ToString()</td>
-                <td>@(card.CardAbility?.ToString() ?? "unknown")</td>
+                <td>@(card.CardAbility.ToString())</td>
                 <td>@card.CardColour.ToString()</td>
                 <td>@(card.ManaCost)</td>
                 @if (card.IsFoil)

@@ -1,32 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using MagicTheGatheringManagement.Domain;
+using MTGM.BL.Domain;
 
-namespace MTGM.BL.Domain;
+namespace UI_MVC.Models;
 
-public class Card
+public class NewCardViewModel
 {
-    
-    public Card()
-    {
-        
-    }
-    public Card(string name, CardType type, CardAbility? cardAbility, CardColour cardColour, int manaCost,
-        double price, string description, bool isFoil, List<DeckEntry> deck = null, List<SetEntry> set = null)
-    {
-        Name = name;
-        Type = type;
-        CardAbility = cardAbility;
-        CardColour = cardColour;
-        ManaCost = manaCost;
-        Price = price;
-        Description = description;
-        IsFoil = isFoil;
-        DeckEntries = deck ?? new List<DeckEntry>();
-        SetEntries = set ?? new List<SetEntry>();
-    }
-    public int Id { get; set; }
-    
     [Required]
     [MinLength(1, ErrorMessage = "Name must be at least 1 character long")]
     public string Name { get; set; }

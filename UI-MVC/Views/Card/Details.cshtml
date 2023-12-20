@@ -5,9 +5,6 @@
     ViewBag.Title = "Card Details";
     Layout = "_Layout";
 }
-@{
-    Card card = Model;
-}
 
 <h1>Card Details</h1>
 <section class="my-3">
@@ -25,7 +22,7 @@
     </div>
     <div class="mb-3 row">
         <label for="card-ability-label" class="col-sm-2 fw-bold">CardAbility</label>
-        <span id="card-ability-label" class="col-sm-10">@(Model.CardAbility?.ToString() ?? "unknown")</span>
+        <span id="card-ability-label" class="col-sm-10">@(Model.CardAbility.ToString())</span>
     </div>
     <div class="mb-3 row">
         <label for="card-colour-label" class="col-sm-2 fw-bold">CardColour</label>
@@ -37,7 +34,7 @@
     </div>
     <div class="mb-3 row">
         <label for="is-foil-label" class="col-sm-2 fw-bold">IsFoil</label>
-        @if (card.IsFoil)
+        @if (Model.IsFoil)
         {
             <span id="is-foil-label" class="col-sm-10">yes</span>
         }
