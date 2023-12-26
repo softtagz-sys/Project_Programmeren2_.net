@@ -55,6 +55,10 @@ public class MtgmDbContext : DbContext
         modelBuilder.Entity<Card>()
             .HasMany(c => c.SetEntries)
             .WithOne(se => se.Card);
+        
+        modelBuilder.Entity<Set>()
+            .Property(s => s.Id)
+            .ValueGeneratedOnAdd();
     }
 
 }

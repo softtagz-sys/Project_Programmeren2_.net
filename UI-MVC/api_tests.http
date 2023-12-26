@@ -1,0 +1,9 @@
+﻿POST https://localhost:7101/api/Sets
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "New Set",
+  "code": "NS",
+  "releaseDate": "2023-01-01"
+}
