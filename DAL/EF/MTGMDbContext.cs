@@ -59,6 +59,10 @@ public class MtgmDbContext : DbContext
         modelBuilder.Entity<Set>()
             .Property(s => s.Id)
             .ValueGeneratedOnAdd();
+        
+        modelBuilder.Entity<Deck>()
+            .Property(s => s.Id)
+            .ValueGeneratedOnAdd();
     }
 
 }

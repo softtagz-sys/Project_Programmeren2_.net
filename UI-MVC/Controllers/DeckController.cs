@@ -5,9 +5,9 @@ namespace MTGM.UI.MVC.Controllers;
 
 public class DeckController : Controller
 {
-    private Manager _manager;
+    private readonly IManager _manager;
 
-    public DeckController(Manager manager)
+    public DeckController(IManager manager)
     {
         _manager = manager;
     }

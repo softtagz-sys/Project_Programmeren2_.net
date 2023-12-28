@@ -38,6 +38,11 @@ public class InMemoryRepository : IRepository
         return _cards.Where(card => card != null && card.Type == type).ToList();
     }
 
+    public IEnumerable<Card> ReadCardsFromDeck(long deckId)
+    {
+        throw new NotImplementedException();
+    }
+
     public Card ReadCardWithDecks(int id)
     {
         throw new NotImplementedException();
@@ -89,6 +94,11 @@ public class InMemoryRepository : IRepository
         throw new NotImplementedException();
     }
 
+    public DeckEntry ReadDeckEntryWithCard(long id)
+    {
+        throw new NotImplementedException();
+    }
+
     public void CreateDeck(Deck deck)
     {
         deck.Id = _deckId++;
@@ -136,6 +146,16 @@ public class InMemoryRepository : IRepository
     }
 
     public void DeleteSetEntry(long cardId, long setId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<DeckEntry> ReadDeckEntriesOfDeck(long deckId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DeckEntry ReadDeckEntry(long id)
     {
         throw new NotImplementedException();
     }

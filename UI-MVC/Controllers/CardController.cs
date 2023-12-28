@@ -9,9 +9,9 @@ namespace MTGM.UI.MVC.Controllers;
 
 public class CardController : Controller
 {
-    private Manager _manager;
+    private readonly IManager _manager;
 
-    public CardController(Manager manager)
+    public CardController(IManager manager)
     {
         _manager = manager;
     }

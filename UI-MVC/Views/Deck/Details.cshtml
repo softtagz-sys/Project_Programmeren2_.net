@@ -24,5 +24,45 @@
         <span id="creation-date-label" class="col-sm-10">@Model.CreationDate</span>
     </div>
 </section>
+<h2>Cards</h2>
+    <table class="table" id="card-table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Added on</th>
+        </tr>
+        </thead>
+        <tbody id="card-table-body">
+        </tbody>
+    </table>
+    
+<h4>Add a new card</h4>
+<form>
+    <div class="mb-3 row">
+        <label class="col-sm-2 form-label" for="card-select">Card</label>
+        <div class="col-sm-10">
+            <select id="card-select" class="form-select">
+            </select>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="quantity-input" class="col-sm-2 form-label">Quantity</label>
+        <div class="col-sm-10">
+            <input id="quantity-input" type="number" class="form-control">
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="added-on-input" class="col-sm-2 form-label">Added on</label>
+        <div class="col-sm-10">
+            <input id="added-on-input" type="date" class="form-control">
+        </div>
+    </div>
+    <button id="add-button" type="button" class="btn btn-primary">Add</button>
+</form>
 
+@section Scripts
+{
+    <script src="~/js/deck/details.js" defer=""></script>
+}
 

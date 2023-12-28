@@ -12,7 +12,7 @@ builder.Services.AddControllersWithViews();
 // Add DbContext, Repository and Manager to the service container
 builder.Services.AddDbContext<MtgmDbContext>(options => options.UseSqlite("Data Source=MTGM.db"));
 builder.Services.AddScoped<IRepository, Repository>();
-builder.Services.AddScoped<Manager, Manager>();
+builder.Services.AddScoped<IManager, Manager>();
 
 var app = builder.Build();
 

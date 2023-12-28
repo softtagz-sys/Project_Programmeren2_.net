@@ -17,11 +17,8 @@ public class Deck : IValidatableObject
         Name = name;
         CreationDate = creationDate;
         Notes = notes;
-        Id = _deckId++;
         Cards = cards ?? new List<DeckEntry>();
     }
-    
-    private static int _deckId = 1;
     public int Id { get; set; }
     [Required]
     [MinLength(1, ErrorMessage = "Name must be at least 1 character long")]

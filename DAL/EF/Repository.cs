@@ -31,6 +31,11 @@ namespace MTGM.DAL.EF
             return _context.Cards.Where(c => c.Type == type).ToList();
         }
 
+        public IEnumerable<Card> ReadCardsFromDeck(long deckId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Card ReadCardWithDecks(int id)
         {
             return _context.Cards
@@ -107,6 +112,13 @@ namespace MTGM.DAL.EF
                 .ToList();
         }
 
+        public DeckEntry ReadDeckEntryWithCard(long id)
+        {
+            return _context.DeckEntries
+                .Include(de => de.Card)
+                .Single(de => de.DeckEntryId == id);
+        }
+
         public void CreateDeck(Deck deck)
         {
             _context.Decks.Add(deck);
@@ -170,6 +182,23 @@ namespace MTGM.DAL.EF
             var setEntry = _context.SetEntries.FirstOrDefault(se => se.Card.Id == cardId && se.Set.Id == setId);
             if (setEntry != null) _context.SetEntries.Remove(setEntry);
             _context.SaveChanges();
+        }
+
+        public List<DeckEntry> ReadDeckEntriesOfDeck(long deckId)
+        {
+            return _context.DeckEntries
+                .Include(de => de.Card)
+                .Include(de => de.Deck)
+                .Where(d => d.Deck.Id == deckId)
+                .ToList();
+        }
+
+        public DeckEntry ReadDeckEntry(long id)
+        {
+            return _context.DeckEntries
+                .Include(de => de.Deck)
+                .Include(de => de.Card)
+                .Single(de => de.DeckEntryId == id);
         }
     }
 }

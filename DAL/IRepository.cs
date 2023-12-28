@@ -9,6 +9,7 @@ public interface IRepository
     public Card ReadCard(int id);
     public IEnumerable<Card> ReadAllCards();
     public IEnumerable<Card> ReadCardsOfType(CardType type);
+    public IEnumerable<Card> ReadCardsFromDeck(long deckId);
     public Card ReadCardWithDecks(int id);
     public Card ReadCardWithSets(int id);
     public Card ReadCardWithDecksAndSets(int id);
@@ -19,6 +20,7 @@ public interface IRepository
     public IEnumerable<Deck> ReadDeckByNameAndCreationDate(String name, DateTime creationDate);
     public IEnumerable<Deck> ReadAllDecksWithCards();
     public IEnumerable<Deck> ReadCardsOfDeck(long deckId);
+    public DeckEntry ReadDeckEntryWithCard(long id);
     public void CreateDeck(Deck deck);
     public void CreateDeckEntry(DeckEntry deckEntry);
     void DeleteDeckEntry(long cardId, long deckId);
@@ -30,5 +32,6 @@ public interface IRepository
     public void CreateSet(Set set);
     public void CreateSetEntry(SetEntry setEntry);
     void DeleteSetEntry(long cardId, long setId);
-
+    public List<DeckEntry> ReadDeckEntriesOfDeck(long deckId);
+    public DeckEntry ReadDeckEntry(long id);
 }

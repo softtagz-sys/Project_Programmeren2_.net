@@ -10,7 +10,7 @@ namespace MTGM.UI.MVC.Controllers.Api
     {
         private readonly IManager _manager;
 
-        public SetsController(Manager manager)
+        public SetsController(IManager manager)
         {
             _manager = manager;
         }

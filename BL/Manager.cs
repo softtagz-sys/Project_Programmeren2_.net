@@ -29,6 +29,11 @@ public class Manager : IManager
         return _repository.ReadCardsOfType(type);
     }
 
+    public IEnumerable<Card> GetCardsFromDeck(long deckId)
+    {
+        return _repository.ReadCardsFromDeck(deckId);
+    }
+
     public Card getCardWithDecks(int id)
     {
         return _repository.ReadCardWithDecks(id);
@@ -72,6 +77,11 @@ public class Manager : IManager
     public IEnumerable<Deck> GetAllDecksWithCards()
     {
         return _repository.ReadAllDecksWithCards();
+    }
+
+    public DeckEntry GetDeckEntryWithCard(long id)
+    {
+        return _repository.ReadDeckEntryWithCard(id);
     }
 
     public Deck AddDeck(string name, List<Card> cards, DateTime creationDate, string notes)
@@ -129,6 +139,16 @@ public class Manager : IManager
     public void RemoveSetEntry(long cardId, long setId)
     {
         _repository.DeleteSetEntry(cardId, setId);
+    }
+
+    public IEnumerable<DeckEntry> GetDeckEntriesOfDeck(long deckId)
+    {
+        return _repository.ReadDeckEntriesOfDeck(deckId);
+    }
+
+    public DeckEntry getDeckEntry(long id)
+    {
+         return _repository.ReadDeckEntry(id);
     }
 
     private void ValidateObject(Object o)
