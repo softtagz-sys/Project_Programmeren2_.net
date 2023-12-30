@@ -78,7 +78,7 @@ namespace MTGM.DAL.EF
             return _context.Decks.ToList();
         }
 
-        public IEnumerable<Deck> ReadDeckByNameAndCreationDate(string name, DateTime creationDate)
+        public IEnumerable<Deck> ReadDeckByNameAndCreationDate(string name, DateTime? creationDate)
         {
             var query = _context.Decks.AsQueryable();
 

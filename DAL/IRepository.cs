@@ -17,7 +17,7 @@ public interface IRepository
     
     public Deck ReadDeck(int id);
     public IEnumerable<Deck> ReadAllDecks();
-    public IEnumerable<Deck> ReadDeckByNameAndCreationDate(String name, DateTime creationDate);
+    public IEnumerable<Deck> ReadDeckByNameAndCreationDate(string name, DateTime? creationDate);
     public IEnumerable<Deck> ReadAllDecksWithCards();
     public IEnumerable<Deck> ReadCardsOfDeck(long deckId);
     public DeckEntry ReadDeckEntryWithCard(long id);

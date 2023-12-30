@@ -69,7 +69,7 @@ public class Manager : IManager
         return _repository.ReadAllDecks();
     }
 
-    public IEnumerable<Deck> GetDeckByNameAndCreationDate(string name, DateTime creationDate)
+    public IEnumerable<Deck> GetDeckByNameAndCreationDate(string name, DateTime? creationDate)
     {
         return _repository.ReadDeckByNameAndCreationDate(name, creationDate);
     }

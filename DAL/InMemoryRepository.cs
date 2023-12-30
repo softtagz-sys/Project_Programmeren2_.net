@@ -79,9 +79,9 @@ public class InMemoryRepository : IRepository
         return _decks.Where(d => d.Name == deck.Name && d.CreationDate == deck.CreationDate).ToList();
     }
 
-    public IEnumerable<Deck> ReadDeckByNameAndCreationDate(string name, DateTime creationDate)
+    public IEnumerable<Deck> ReadDeckByNameAndCreationDate(string name, DateTime? creationDate)
     {
-        return _decks.Where(card => name != null && (card.Name.Contains(name) || card.CreationDate.ToShortDateString() == creationDate.ToShortDateString())).ToList();
+        return _decks.Where(card => name != null && (card.Name.Contains(name) || (creationDate.HasValue && card.CreationDate.ToShortDateString() == creationDate.Value.ToShortDateString()))).ToList();
     }
 
     public IEnumerable<Deck> ReadAllDecksWithCards()

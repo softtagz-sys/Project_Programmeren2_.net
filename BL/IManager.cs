@@ -17,7 +17,7 @@ public interface IManager
     
     public Deck GetDeck(int id);
     public IEnumerable<Deck> GetAllDecks();
-    public IEnumerable<Deck> GetDeckByNameAndCreationDate(String name, DateTime creationDate);
+    public IEnumerable<Deck> GetDeckByNameAndCreationDate(string name, DateTime? creationDate);
     public IEnumerable<Deck> GetAllDecksWithCards();
     public DeckEntry GetDeckEntryWithCard(long id);
     public Deck AddDeck(string name, List<Card> cards, DateTime creationDate, string notes);

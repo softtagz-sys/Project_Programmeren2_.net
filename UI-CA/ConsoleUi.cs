@@ -168,12 +168,29 @@ public class ConsoleUi
     private void ShowDecksByNameAndOrDate()
     {
         Console.Write("Enter (part of) a name or leave blank: ");
-        string name = Console.ReadLine();
-        
-        Console.Write("Enter a full creation date (yyyy/mm/dd) or leave blank: ");
-        string date = Console.ReadLine();
+        string? name = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            name = null;
+        }
 
-        foreach (var deck in _manager.GetDeckByNameAndCreationDate(name, Convert.ToDateTime(date)))
+        Console.Write("Enter a full creation date (yyyy/mm/dd) or leave blank: ");
+        string? dateInput = Console.ReadLine();
+        DateTime? date = null;
+        if (!string.IsNullOrWhiteSpace(dateInput))
+        {
+            if (DateTime.TryParse(dateInput, out DateTime parsedDate))
+            {
+                date = parsedDate;
+            }
+            else
+            {
+                Console.WriteLine("Invalid date format. Please try again.");
+                return;
+            }
+        }
+
+        foreach (var deck in _manager.GetDeckByNameAndCreationDate(name, date))
         {
             Console.WriteLine(deck.GetString());
         }

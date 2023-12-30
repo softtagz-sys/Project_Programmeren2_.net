@@ -34,7 +34,7 @@ async function loadCardsWithDecks() {
                 <tr>
                     <td>${deckentry.card}</td>
                     <td>${deckentry.quantity}</td>
-                    <td>${deckentry.addedOn}</td>
+                    <td>${new Date(deckentry.addedOn).toLocaleDateString()}</td>
                 </tr>
                 `;
         }
