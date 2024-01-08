@@ -21,7 +21,7 @@ public interface IManager
     public IEnumerable<Deck> GetAllDecksWithCards();
     public DeckEntry GetDeckEntryWithCard(long id);
     public Deck AddDeck(string name, List<Card> cards, DateTime creationDate, string notes);
-    public DeckEntry AddDeckEntry(Deck deck, Card card, int amount, DateTime creationDate);
+    public DeckEntry AddDeckEntry(int cardId, int deckId, int amount, DateTime creationDate);
     public void RemoveDeckEntry(long cardId, long deckId);
     
     public Set GetSet(int id);

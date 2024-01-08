@@ -92,8 +92,16 @@ public class Manager : IManager
         return deck;
     }
 
-    public DeckEntry AddDeckEntry(Deck deck, Card card, int amount, DateTime creationDate)
+    public DeckEntry AddDeckEntry(int cardId, int deckId, int amount, DateTime creationDate)
     {
+        Card card = GetCard(cardId);
+        Deck deck = GetDeck(deckId);
+
+        if (card == null || deck == null)
+        {
+            throw new ArgumentException("Card or Deck not found.");
+        }
+
         DeckEntry deckEntry = new DeckEntry(card, deck, amount, creationDate);
         ValidateObject(deckEntry);
         _repository.CreateDeckEntry(deckEntry);

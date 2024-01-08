@@ -55,17 +55,26 @@ public class DeckEntriesController : ControllerBase
     [HttpPost]
     public ActionResult<DeckEntryDto> AddNewDeckEntry(NewDeckEntryDto deckEntryDto)
     {
-        var createdDeckEntry = _manager.AddDeckEntry(deckEntryDto.Card,
-            deckEntryDto.Deck, deckEntryDto.Quantity, deckEntryDto.AddedOn);
+        try
+        {
+            var createdDeckEntry = _manager.AddDeckEntry(deckEntryDto.CardId,
+                deckEntryDto.DeckId, deckEntryDto.Quantity, deckEntryDto.AddedOn);
+            return CreatedAtAction("GetOneDeckEntry",
+                new { id = createdDeckEntry.DeckEntryId },
+                new DeckEntryDto
+                {
+                    Card = createdDeckEntry.Card.Name,
+                    Deck = createdDeckEntry.Deck.Name,
+                    Quantity = createdDeckEntry.Quantity,
+                    AddedOn = createdDeckEntry.AddedOn
+                });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            Console.WriteLine(ex.StackTrace);
 
-        return CreatedAtAction("GetOneDeckEntry",
-            new { id = createdDeckEntry.DeckEntryId },
-            new DeckEntryDto
-            {
-                Card = createdDeckEntry.Card.Name,
-                Deck = createdDeckEntry.Deck.Name,
-                Quantity = createdDeckEntry.Quantity,
-                AddedOn = createdDeckEntry.AddedOn
-            });
+            return StatusCode(500, ex.Message);
+        }
     }
 }

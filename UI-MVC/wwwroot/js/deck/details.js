@@ -66,6 +66,7 @@ async function loadAllCards() {
 }
 
 async function addNewCard() {
+    console.log(cardSelect.value, quantityInput.value, addedOnInput.value);
     const response = await fetch('/api/DeckEntries/',
         {
             method: "POST",
