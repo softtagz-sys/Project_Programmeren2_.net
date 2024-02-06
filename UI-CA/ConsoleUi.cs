@@ -412,12 +412,12 @@ public class ConsoleUi
            Console.WriteLine("Invalid input. Please enter a valid positive number:");
        }
 
-       _manager.AddDeckEntry(
+       /*_manager.AddDeckEntry(
            _manager.GetDeck(deckChoice),
            _manager.GetCard(cardChoice),
            amountChoice,
            DateTime.Now
-       );
+       );*/
    }
 
    private void AddCardToSet()

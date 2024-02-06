@@ -81,8 +81,10 @@ async function addNewCard() {
             })
         }
     );
-    if (response.status === 200) {
-        await loadCardsWithDecks();
+    if (response.status === 201) {
+        response.json().then(async () => {
+            await loadCardsWithDecks();
+        });
     }
 }
 

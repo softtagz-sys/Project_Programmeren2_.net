@@ -40,6 +40,6 @@ public class Card
     [Required]
     [Range(0, double.MaxValue, ErrorMessage = "Price must be a positive value.")]
     public double Price { get; set; }
-    public string? Description { get; set; }
+    public string Description { get; set; }
     public bool IsFoil { get; set; }
 }

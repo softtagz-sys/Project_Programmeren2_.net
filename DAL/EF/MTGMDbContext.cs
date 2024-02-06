@@ -64,5 +64,4 @@ public class MtgmDbContext : DbContext
             .Property(s => s.Id)
             .ValueGeneratedOnAdd();
     }
-
 }
