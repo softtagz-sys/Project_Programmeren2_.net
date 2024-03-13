@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MTGM.BL;
 using MTGM.UI.MVC.Models.Dto;
 
@@ -50,7 +51,7 @@ namespace MTGM.UI.MVC.Controllers.Api
                 ReleaseDate = set.ReleaseDate
             });
         }
-        
+        [Authorize]
         [HttpPost]
         public IActionResult AddSet([FromBody] NewSetDto newSet)
         {

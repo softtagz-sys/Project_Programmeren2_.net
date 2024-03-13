@@ -1,4 +1,5 @@
 ﻿using MagicTheGatheringManagement.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -31,6 +32,7 @@ public class CardController : Controller
         ViewBag.CardTypes = Enum.GetValues(typeof(CardType));
         return View();
     }
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> Add(NewCardViewModel card)
     {

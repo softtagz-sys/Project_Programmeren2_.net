@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MTGM.BL;
 using MTGM.BL.Domain;
 using MTGM.UI.MVC.Models.Dto;
@@ -51,7 +52,7 @@ public class DeckEntriesController : ControllerBase
             AddedOn = deckEntry.AddedOn
         }));
     }
-    
+    [Authorize]
     [HttpPost]
     public ActionResult<DeckEntryDto> AddNewDeckEntry(NewDeckEntryDto deckEntryDto)
     {
