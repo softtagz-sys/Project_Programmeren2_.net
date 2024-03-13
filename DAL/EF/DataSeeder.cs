@@ -38,7 +38,7 @@ public static class DataSeeder
             0.12,
             "Spell you cast that target Elderwoorth Scion cost 2 less to cast. Spells your opponents cast that target Elderwoorth Scion cost 2 more to cast.",
             true,
-            context.Users.Single(u => u.UserName == "jef")));
+            context.Users.Single(u => u.UserName == "jef@kdg.be")));
         _cards.Add( new Card("Windstorm Drake",
             CardType.Creature,
             CardAbility.Flying,
@@ -47,7 +47,7 @@ public static class DataSeeder
             0.08,
             "Other creatures you control with flying get +1/+0.",
             false,
-            context.Users.Single(u => u.UserName == "jef")));
+            context.Users.Single(u => u.UserName == "jef@kdg.be")));
         _cards.Add( new Card("Unbreakable Formation",
             CardType.Instant,
             null!,
@@ -56,7 +56,7 @@ public static class DataSeeder
             0.13,
             "Creatures you control gain indestructible until end of turn. Addendum — If you cast this spell during your main phase, put a +1/+1 counter on each of those creatures and they gain vigilance until end of turn.",
             false,
-            context.Users.Single(u => u.UserName == "jef")));
+            context.Users.Single(u => u.UserName == "jef@kdg.be")));
         _cards.Add( new Card("Sol Ring",
             CardType.Artifact,
             null!,
@@ -65,7 +65,7 @@ public static class DataSeeder
             0.35,
             "Tap: Add CC.",
             true,
-            context.Users.Single(u => u.UserName == "jef")));
+            context.Users.Single(u => u.UserName == "jef@kdg.be")));
 
         _sets.Add(new Set(
             "Commander2018",

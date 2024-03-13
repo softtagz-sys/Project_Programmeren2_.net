@@ -61,14 +61,14 @@ void SeedIdentity(UserManager<IdentityUser> userManager)
     var kobe = new IdentityUser
     {
         Email = "kobe@kdg.be",
-        UserName = "kobe",
+        UserName = "kobe@kdg.be",
         EmailConfirmed = true
     };
-    userManager.CreateAsync(kobe, "Password1").Wait();
+    userManager.CreateAsync(kobe, "Password1!").Wait();
     var jef = new IdentityUser
     {
         Email = "jef@kdg.be",
-        UserName = "jef",
+        UserName = "jef@kdg.be",
         EmailConfirmed = true
     };
     userManager.CreateAsync(jef, "Password1!").Wait();
