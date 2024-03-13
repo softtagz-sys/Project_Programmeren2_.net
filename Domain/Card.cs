@@ -44,5 +44,7 @@ public class Card
     public double Price { get; set; }
     public string Description { get; set; }
     public bool IsFoil { get; set; }
+    public string UserId { get; set; }
+    [ForeignKey("UserId")]
     public IdentityUser User { get; set; }
 }

@@ -35,19 +35,14 @@ public class Manager : IManager
         return _repository.ReadCardsFromDeck(deckId);
     }
 
-    public Card getCardWithDecks(int id)
-    {
-        return _repository.ReadCardWithDecks(id);
-    }
-
-    public Card getCardWithSets(int id)
-    {
-        return _repository.ReadCardWithSets(id);
-    }
-
-    public Card getCardWithSetsAndDecks(int id)
+    public Card GetCardWithSetsAndDecks(int id)
     {
         return _repository.ReadCardWithDecksAndSets(id);
+    }
+    
+    public Card GetCardWithSetsAndDecksAndUsers(int id)
+    {
+        return _repository.ReadCardWithDecksAndSetsAndUsers(id);
     }
 
     public Card AddCard(string name, CardType type, CardAbility? cardAbilities, CardColour cardColours, int manaCost,

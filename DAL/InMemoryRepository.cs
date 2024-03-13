@@ -59,6 +59,11 @@ public class InMemoryRepository : IRepository
         throw new NotImplementedException();
     }
 
+    public Card ReadCardWithDecksAndSetsAndUsers(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public void CreateCard(Card card)
     {
         card.Id = _cardId++;

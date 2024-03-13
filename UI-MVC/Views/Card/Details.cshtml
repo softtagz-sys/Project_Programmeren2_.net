@@ -47,6 +47,10 @@
         <label for="description-label" class="col-sm-2 fw-bold">Description</label>
         <span id="description-label" class="col-sm-10">@(Model.Description ?? "unknown")</span>
     </div>
+    <div class="mb-3 row">
+            <label for="owner-label" class="col-sm-2 fw-bold">Owned by</label>
+            <span id="owner-label" class="col-sm-10">@(Model.User?.UserName ?? "unknown")</span>
+        </div>
 </section>
 <section>
     <h2>Decks</h2>

@@ -40,7 +40,10 @@ public class MtgmDbContext : IdentityDbContext<IdentityUser>
     {
         base.OnModelCreating(modelBuilder);
         
-        
+        modelBuilder.Entity<Card>()
+            .HasOne(c => c.User)
+            .WithMany()
+            .HasForeignKey(c => c.UserId);
         
         modelBuilder.Entity<Card>()
             .Property(c => c.CardAbility)

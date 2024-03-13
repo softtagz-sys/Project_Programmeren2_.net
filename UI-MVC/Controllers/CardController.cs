@@ -49,6 +49,6 @@ public class CardController : Controller
     }
     public IActionResult Details(int id)
     {
-        return View(_manager.getCardWithSetsAndDecks(id));
+        return View(_manager.GetCardWithSetsAndDecksAndUsers(id));
     }
 }

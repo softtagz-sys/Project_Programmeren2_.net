@@ -10,9 +10,8 @@ public interface IManager
     public IEnumerable<Card> GetAllCards();
     public IEnumerable<Card> GetCardsOfType(CardType type);
     public IEnumerable<Card> GetCardsFromDeck(long deckId);
-    public Card getCardWithDecks(int id);
-    public Card getCardWithSets(int id);
-    public Card getCardWithSetsAndDecks(int id);
+    public Card GetCardWithSetsAndDecks(int id);
+    public Card GetCardWithSetsAndDecksAndUsers(int id);
     public Card AddCard(string name, CardType type, CardAbility? cardAbilities, CardColour cardColours, int manaCost,
         double price, string description, bool isFoil, IdentityUser user);
     

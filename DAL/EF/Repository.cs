@@ -36,22 +36,6 @@ namespace MTGM.DAL.EF
             throw new NotImplementedException();
         }
 
-        public Card ReadCardWithDecks(int id)
-        {
-            return _context.Cards
-                .Include(c => c.DeckEntries)
-                .ThenInclude(de => de.Deck)
-                .Single(c => c.Id == id);
-        }
-
-        public Card ReadCardWithSets(int id)
-        {
-            return _context.Cards
-                .Include(c => c.SetEntries)
-                .ThenInclude(se => se.Set)
-                .Single(c => c.Id == id);
-        }
-
         public Card ReadCardWithDecksAndSets(int id)
         {
             return _context.Cards
@@ -59,6 +43,17 @@ namespace MTGM.DAL.EF
                 .ThenInclude(de => de.Deck)
                 .Include(c => c.SetEntries)
                 .ThenInclude(se => se.Set)
+                .Single(c => c.Id == id);
+        }
+        
+        public Card ReadCardWithDecksAndSetsAndUsers(int id)
+        {
+            return _context.Cards
+                .Include(c => c.DeckEntries)
+                .ThenInclude(de => de.Deck)
+                .Include(c => c.SetEntries)
+                .ThenInclude(se => se.Set)
+                .Include(c => c.User)
                 .Single(c => c.Id == id);
         }
 
