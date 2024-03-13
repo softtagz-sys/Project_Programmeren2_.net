@@ -1,0 +1,8 @@
+@startuml
+class NewDeckEntryDto {
+    + CardId : int <<get>> <<set>>
+    + DeckId : int <<get>> <<set>>
+    + Quantity : int <<get>> <<set>>
+}
+NewDeckEntryDto --> "AddedOn" DateTime
+@enduml

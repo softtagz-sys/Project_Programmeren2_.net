@@ -1,0 +1,28 @@
+@startuml
+interface IManager {
+    + GetCard(id:int) : Card
+    + GetAllCards() : IEnumerable<Card>
+    + GetCardsOfType(type:CardType) : IEnumerable<Card>
+    + GetCardsFromDeck(deckId:long) : IEnumerable<Card>
+    + getCardWithDecks(id:int) : Card
+    + getCardWithSets(id:int) : Card
+    + getCardWithSetsAndDecks(id:int) : Card
+    + AddCard(name:string, type:CardType, cardAbilities:CardAbility?, cardColours:CardColour, manaCost:int, price:double, description:string, isFoil:bool) : Card
+    + GetDeck(id:int) : Deck
+    + GetAllDecks() : IEnumerable<Deck>
+    + GetDeckByNameAndCreationDate(name:string, creationDate:DateTime?) : IEnumerable<Deck>
+    + GetAllDecksWithCards() : IEnumerable<Deck>
+    + GetDeckEntryWithCard(id:long) : DeckEntry
+    + AddDeck(name:string, cards:List<Card>, creationDate:DateTime, notes:string) : Deck
+    + AddDeckEntry(cardId:int, deckId:int, amount:int, creationDate:DateTime) : DeckEntry
+    + RemoveDeckEntry(cardId:long, deckId:long) : void
+    + GetSet(id:int) : Set
+    + GetAllSets() : IEnumerable<Set>
+    + GetAllSetsWithCard() : IEnumerable<Set>
+    + AddSet(name:String, code:String, releaseDate:DateTime) : Set
+    + AddSetEntry(card:Card, set:Set, addedOn:DateTime) : SetEntry
+    + RemoveSetEntry(cardId:long, setId:long) : void
+    + GetDeckEntriesOfDeck(deckId:long) : IEnumerable<DeckEntry>
+    + getDeckEntry(id:long) : DeckEntry
+}
+@enduml

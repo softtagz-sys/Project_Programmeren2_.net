@@ -1,0 +1,13 @@
+@startuml
+class DataSeeder <<static>> {
+    {static} DataSeeder()
+    + {static} Seed(context:MtgmDbContext) : void
+}
+class "IList`1"<T> {
+}
+DataSeeder --> "_sets<Set>" "IList`1"
+DataSeeder --> "_setEntries<SetEntry>" "IList`1"
+DataSeeder --> "_cards<Card>" "IList`1"
+DataSeeder --> "_deckEntries<DeckEntry>" "IList`1"
+DataSeeder --> "_decks<Deck>" "IList`1"
+@enduml

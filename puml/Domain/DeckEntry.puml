@@ -1,0 +1,11 @@
+@startuml
+class DeckEntry {
+    + DeckEntry()
+    + DeckEntry(card:Card, deck:Deck, quantity:int, dt:DateTime)
+    + DeckEntryId : int <<get>> <<set>>
+    + Quantity : int <<get>> <<set>>
+}
+DeckEntry --> "Card" Card
+DeckEntry --> "Deck" Deck
+DeckEntry --> "AddedOn" DateTime
+@enduml

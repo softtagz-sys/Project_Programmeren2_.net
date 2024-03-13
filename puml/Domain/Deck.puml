@@ -1,0 +1,15 @@
+@startuml
+class Deck {
+    + Deck()
+    + Deck(name:string, creationDate:DateTime, notes:string, cards:List<DeckEntry>)
+    + Id : int <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + Notes : string <<get>> <<set>>
+    + Validate(validationContext:ValidationContext) : IEnumerable<ValidationResult>
+}
+class "ICollection`1"<T> {
+}
+IValidatableObject <|-- Deck
+Deck --> "Cards<DeckEntry>" "ICollection`1"
+Deck --> "CreationDate" DateTime
+@enduml

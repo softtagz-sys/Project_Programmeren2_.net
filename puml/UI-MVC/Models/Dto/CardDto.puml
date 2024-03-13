@@ -1,0 +1,17 @@
+@startuml
+class CardDto {
+    + Id : int <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + CardAbility : CardAbility? <<get>> <<set>>
+    + ManaCost : int <<get>> <<set>>
+    + Price : double <<get>> <<set>>
+    + Description : string? <<get>> <<set>>
+    + IsFoil : bool <<get>> <<set>>
+}
+class "ICollection`1"<T> {
+}
+CardDto --> "Type" CardType
+CardDto --> "DeckEntries<DeckEntry>" "ICollection`1"
+CardDto --> "SetEntries<SetEntry>" "ICollection`1"
+CardDto --> "CardColour" CardColour
+@enduml

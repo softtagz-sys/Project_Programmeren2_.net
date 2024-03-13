@@ -1,0 +1,8 @@
+@startuml
+class DecksController {
+    + DecksController(manager:IManager)
+    + GetCards(deckId:int) : IActionResult
+}
+ControllerBase <|-- DecksController
+DecksController --> "_manager" IManager
+@enduml

@@ -1,9 +1,11 @@
-﻿using MTGM.BL.Domain;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using MTGM.BL.Domain;
 
 namespace MTGM.DAL.EF;
 using Microsoft.EntityFrameworkCore;
 
-public class MtgmDbContext : DbContext
+public class MtgmDbContext : IdentityDbContext<IdentityUser>
 {
     public DbSet<Card> Cards { get; set; }
     public DbSet<Deck> Decks { get; set; }
@@ -36,6 +38,10 @@ public class MtgmDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+        
+        
+        
         modelBuilder.Entity<Card>()
             .Property(c => c.CardAbility)
             .HasConversion<int>();

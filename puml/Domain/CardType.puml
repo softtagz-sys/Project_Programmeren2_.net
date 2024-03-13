@@ -1,0 +1,11 @@
+@startuml
+enum CardType {
+    Artifact= 1,
+    Creature,
+    Enchantment,
+    Instant,
+    Land,
+    Planeswalker,
+    Sorcery,
+}
+@enduml

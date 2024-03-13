@@ -1,0 +1,10 @@
+@startuml
+class DeckEntriesController {
+    + DeckEntriesController(manager:IManager)
+    + GetOneDeckEntry(id:long) : ActionResult<DeckEntryDto>
+    + GetCardsOfDeckEntries(deckEntryId:long) : ActionResult<IEnumerable<DeckEntryDto>>
+    + AddNewDeckEntry(deckEntryDto:NewDeckEntryDto) : ActionResult<DeckEntryDto>
+}
+ControllerBase <|-- DeckEntriesController
+DeckEntriesController --> "_manager" IManager
+@enduml

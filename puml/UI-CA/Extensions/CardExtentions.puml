@@ -1,0 +1,5 @@
+@startuml
+class CardExtentions <<static>> {
+    + {static} GetString(card:Card) : string
+}
+@enduml

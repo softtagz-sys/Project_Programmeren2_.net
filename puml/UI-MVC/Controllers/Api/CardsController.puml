@@ -1,0 +1,8 @@
+@startuml
+class CardsController {
+    + CardsController(manager:IManager)
+    + GetAllCards() : ActionResult<IEnumerable<CardDto>>
+}
+ControllerBase <|-- CardsController
+CardsController --> "_manager" IManager
+@enduml

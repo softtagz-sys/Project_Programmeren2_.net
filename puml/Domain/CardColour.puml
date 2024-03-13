@@ -1,0 +1,10 @@
+@startuml
+enum CardColour {
+    White= 1,
+    Blue,
+    Black,
+    Red,
+    Green,
+    Colourless,
+}
+@enduml

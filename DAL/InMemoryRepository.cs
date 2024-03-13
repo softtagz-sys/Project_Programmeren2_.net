@@ -1,5 +1,6 @@
 ﻿using MagicTheGatheringManagement.Domain;
 using MTGM.BL.Domain;
+using MTGM.DAL.EF;
 
 namespace MTGM.DAL;
 
@@ -160,7 +161,7 @@ public class InMemoryRepository : IRepository
         throw new NotImplementedException();
     }
 
-    public static void Seed()
+    public static void Seed(MtgmDbContext context)
     {
         _cards.Add( new Card("Elderwoorth Scion",
             CardType.Creature,
@@ -169,7 +170,8 @@ public class InMemoryRepository : IRepository
             6,
             0.12,
             "Spell you cast that target Elderwoorth Scion cost 2 less to cast. Spells your opponents cast that target Elderwoorth Scion cost 2 more to cast.",
-            true));
+            true,
+            context.Users.Single(u => u.UserName == "kobe")));
         _cards.Add( new Card("Windstorm Drake",
             CardType.Creature,
             CardAbility.Flying,
@@ -177,7 +179,8 @@ public class InMemoryRepository : IRepository
             5,
             0.08,
             "Other creatures you control with flying get +1/+0.",
-            false));
+            false,
+            context.Users.Single(u => u.UserName == "kobe")));
         _cards.Add( new Card("Unbreakable Formation",
             CardType.Instant,
             null!,
@@ -185,7 +188,8 @@ public class InMemoryRepository : IRepository
             3,
             0.13,
             "Creatures you control gain indestructible until end of turn. Addendum — If you cast this spell during your main phase, put a +1/+1 counter on each of those creatures and they gain vigilance until end of turn.",
-            false));
+            false,
+            context.Users.Single(u => u.UserName == "kobe")));
         _cards.Add( new Card("Sol Ring",
             CardType.Artifact,
             null!,
@@ -193,7 +197,8 @@ public class InMemoryRepository : IRepository
             1,
             0.35,
             "Tap: Add CC.",
-            true));
+            true,
+            context.Users.Single(u => u.UserName == "kobe")));
 
         _sets.Add(new Set(
             "Commander2018",

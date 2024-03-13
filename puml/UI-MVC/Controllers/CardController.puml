@@ -1,0 +1,11 @@
+@startuml
+class CardController {
+    + CardController(manager:IManager)
+    + Index() : IActionResult
+    + Add() : IActionResult
+    + Add(card:NewCardViewModel) : IActionResult
+    + Details(id:int) : IActionResult
+}
+Controller <|-- CardController
+CardController --> "_manager" IManager
+@enduml

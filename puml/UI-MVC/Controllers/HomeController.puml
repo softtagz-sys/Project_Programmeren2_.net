@@ -1,0 +1,12 @@
+@startuml
+class HomeController {
+    + HomeController(logger:ILogger<HomeController>)
+    + Index() : IActionResult
+    + Privacy() : IActionResult
+    + Error() : IActionResult
+}
+class "ILogger`1"<T> {
+}
+Controller <|-- HomeController
+HomeController --> "_logger<HomeController>" "ILogger`1"
+@enduml

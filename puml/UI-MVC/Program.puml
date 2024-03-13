@@ -1,0 +1,12 @@
+@startuml
+class "AddDbContext`1"<T> {
+}
+class "AddDefaultIdentity`1"<T> {
+}
+class "AddEntityFrameworkStores`1"<T> {
+}
+class "AddScoped`2"<T1,T2> {
+}
+class "GetRequiredService`1"<T> {
+}
+@enduml

@@ -1,0 +1,5 @@
+@startuml
+class SetExtentions <<static>> {
+    + {static} GetString(set:Set) : string
+}
+@enduml

@@ -3,6 +3,7 @@ using MTGM.BL;
 using MTGM.DAL;
 using MTGM.DAL.EF;
 using UI_MVC.Controllers;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,23 +12,22 @@ builder.Services.AddControllersWithViews();
 
 // Add DbContext, Repository and Manager to the service container
 builder.Services.AddDbContext<MtgmDbContext>(options => options.UseSqlite("Data Source=MTGM.db"));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<MtgmDbContext>();
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IManager, Manager>();
 
 var app = builder.Build();
 
-// Get the service provider and use it to get the DbContext
-using (var serviceScope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
-    var services = serviceScope.ServiceProvider;
-    var context = services.GetRequiredService<MtgmDbContext>();
-
-    // Ensure the database is created
-    context.Database.EnsureCreated();
-
-    // Call the Seed routine if necessary
-    if (!context.Cards.Any())
+    var context = scope.ServiceProvider.GetRequiredService<MtgmDbContext>();
+    if (context.CreateDatabase(true))
     {
+        var userManager = scope.ServiceProvider
+            .GetRequiredService<UserManager<IdentityUser>>();
+        SeedIdentity(userManager);
+        
         DataSeeder.Seed(context);
     }
 }
@@ -51,4 +51,25 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapRazorPages();
+
 app.Run();
+return;
+
+void SeedIdentity(UserManager<IdentityUser> userManager)
+{
+    var kobe = new IdentityUser
+    {
+        Email = "kobe@kdg.be",
+        UserName = "kobe",
+        EmailConfirmed = true
+    };
+    userManager.CreateAsync(kobe, "Password1").Wait();
+    var jef = new IdentityUser
+    {
+        Email = "jef@kdg.be",
+        UserName = "jef",
+        EmailConfirmed = true
+    };
+    userManager.CreateAsync(jef, "Password1!").Wait();
+}

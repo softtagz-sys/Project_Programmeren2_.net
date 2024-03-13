@@ -1,0 +1,10 @@
+@startuml
+class SetsController {
+    + SetsController(manager:IManager)
+    + GetAllSets() : ActionResult<IEnumerable<SetDto>>
+    + GetOneSet(id:int) : ActionResult<SetDto>
+    + AddSet(newSet:NewSetDto) : IActionResult
+}
+ControllerBase <|-- SetsController
+SetsController --> "_manager" IManager
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class SetDto {
+    + Id : int <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+}
+SetDto --> "Code" String
+SetDto --> "ReleaseDate" DateTime
+@enduml

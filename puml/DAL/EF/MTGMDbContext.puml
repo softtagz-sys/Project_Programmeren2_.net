@@ -1,0 +1,18 @@
+@startuml
+class MtgmDbContext {
+    + MtgmDbContext(options:DbContextOptions<MtgmDbContext>)
+    # <<override>> OnConfiguring(optionsBuilder:DbContextOptionsBuilder) : void
+    + CreateDatabase(wipeDatabase:bool) : bool
+    # <<override>> OnModelCreating(modelBuilder:ModelBuilder) : void
+}
+class "IdentityDbContext`1"<T> {
+}
+class "DbSet`1"<T> {
+}
+"IdentityDbContext`1" "<IdentityUser>" <|-- MtgmDbContext
+MtgmDbContext --> "Cards<Card>" "DbSet`1"
+MtgmDbContext --> "Decks<Deck>" "DbSet`1"
+MtgmDbContext --> "Sets<Set>" "DbSet`1"
+MtgmDbContext --> "DeckEntries<DeckEntry>" "DbSet`1"
+MtgmDbContext --> "SetEntries<SetEntry>" "DbSet`1"
+@enduml

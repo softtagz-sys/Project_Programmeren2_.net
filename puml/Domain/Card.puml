@@ -1,0 +1,19 @@
+@startuml
+class Card {
+    + Card()
+    + Card(name:string, type:CardType, cardAbility:CardAbility?, cardColour:CardColour, manaCost:int, price:double, description:string, isFoil:bool, deck:List<DeckEntry>, set:List<SetEntry>)
+    + Id : int <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + CardAbility : CardAbility? <<get>> <<set>>
+    + ManaCost : int <<get>> <<set>>
+    + Price : double <<get>> <<set>>
+    + Description : string <<get>> <<set>>
+    + IsFoil : bool <<get>> <<set>>
+}
+class "ICollection`1"<T> {
+}
+Card --> "Type" CardType
+Card --> "DeckEntries<DeckEntry>" "ICollection`1"
+Card --> "SetEntries<SetEntry>" "ICollection`1"
+Card --> "CardColour" CardColour
+@enduml

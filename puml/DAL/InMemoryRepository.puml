@@ -1,0 +1,43 @@
+@startuml
+class InMemoryRepository {
+    - _cardId : int = 1
+    - _deckId : int = 1
+    + InMemoryRepository()
+    + ReadCard(id:int) : Card
+    + ReadAllCards() : IEnumerable<Card>
+    + ReadCardsOfType(type:CardType) : IEnumerable<Card>
+    + ReadCardsFromDeck(deckId:long) : IEnumerable<Card>
+    + ReadCardWithDecks(id:int) : Card
+    + ReadCardWithSets(id:int) : Card
+    + ReadCardWithDecksAndSets(id:int) : Card
+    + CreateCard(card:Card) : void
+    + ReadDeck(id:int) : Deck
+    + ReadAllDecks() : IEnumerable<Deck>
+    + ReadDeckByNameAndCreationDate(deck:Deck) : List<Deck>
+    + ReadDeckByNameAndCreationDate(name:string, creationDate:DateTime?) : IEnumerable<Deck>
+    + ReadAllDecksWithCards() : IEnumerable<Deck>
+    + ReadCardsOfDeck(deckId:long) : IEnumerable<Deck>
+    + ReadDeckEntryWithCard(id:long) : DeckEntry
+    + CreateDeck(deck:Deck) : void
+    + CreateDeckEntry(deckEntry:DeckEntry) : void
+    + DeleteDeckEntry(cardId:long, deckId:long) : void
+    + ReadSet(id:int) : Set
+    + ReadAllSets() : IEnumerable<Set>
+    + ReadAllSetsWithCard() : IEnumerable<Set>
+    + ReadCardsOfSet(setId:long) : IEnumerable<Set>
+    + CreateSet(set:Set) : void
+    + CreateSetEntry(setEntry:SetEntry) : void
+    + DeleteSetEntry(cardId:long, setId:long) : void
+    + ReadDeckEntriesOfDeck(deckId:long) : List<DeckEntry>
+    + ReadDeckEntry(id:long) : DeckEntry
+    + {static} Seed() : void
+}
+class "IList`1"<T> {
+}
+IRepository <|-- InMemoryRepository
+InMemoryRepository --> "_sets<Set>" "IList`1"
+InMemoryRepository --> "_setEntries<SetEntry>" "IList`1"
+InMemoryRepository --> "_cards<Card>" "IList`1"
+InMemoryRepository --> "_deckEntries<DeckEntry>" "IList`1"
+InMemoryRepository --> "_decks<Deck>" "IList`1"
+@enduml

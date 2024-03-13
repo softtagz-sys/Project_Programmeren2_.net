@@ -1,4 +1,5 @@
 ﻿using MagicTheGatheringManagement.Domain;
+using Microsoft.AspNetCore.Identity;
 using MTGM.BL.Domain;
 
 namespace MTGM.BL;
@@ -13,7 +14,7 @@ public interface IManager
     public Card getCardWithSets(int id);
     public Card getCardWithSetsAndDecks(int id);
     public Card AddCard(string name, CardType type, CardAbility? cardAbilities, CardColour cardColours, int manaCost,
-        double price, string description, bool isFoil);
+        double price, string description, bool isFoil, IdentityUser user);
     
     public Deck GetDeck(int id);
     public IEnumerable<Deck> GetAllDecks();

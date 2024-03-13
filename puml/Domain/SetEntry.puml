@@ -1,0 +1,10 @@
+@startuml
+class SetEntry {
+    + SetEntry()
+    + SetEntry(card:Card, set:Set, addedOn:DateTime)
+    + SetEntryId : int <<get>> <<set>>
+}
+SetEntry --> "Card" Card
+SetEntry --> "Set" Set
+SetEntry --> "AddedOn" DateTime
+@enduml

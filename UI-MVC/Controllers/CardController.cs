@@ -1,4 +1,5 @@
 ﻿using MagicTheGatheringManagement.Domain;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MTGM.BL;
@@ -10,10 +11,12 @@ namespace MTGM.UI.MVC.Controllers;
 public class CardController : Controller
 {
     private readonly IManager _manager;
+    private readonly UserManager<IdentityUser> _userManager;
 
-    public CardController(IManager manager)
+    public CardController(IManager manager, UserManager<IdentityUser> userManager)
     {
         _manager = manager;
+        _userManager = userManager;
     }
     
     public IActionResult Index()
@@ -29,7 +32,7 @@ public class CardController : Controller
         return View();
     }
     [HttpPost]
-    public IActionResult Add(NewCardViewModel card)
+    public async Task<IActionResult> Add(NewCardViewModel card)
     {
         if (!ModelState.IsValid)
         {
@@ -39,7 +42,8 @@ public class CardController : Controller
             return View();
         }
 
-        _manager.AddCard(card.Name, card.Type, card.CardAbility, card.CardColour, card.ManaCost, card.Price, card.Description, card.IsFoil);
+        var user = await _userManager.GetUserAsync(User);
+        _manager.AddCard(card.Name, card.Type, card.CardAbility, card.CardColour, card.ManaCost, card.Price, card.Description, card.IsFoil, user);
         ModelState.Clear();
         return RedirectToAction("Index", "Card");
     }

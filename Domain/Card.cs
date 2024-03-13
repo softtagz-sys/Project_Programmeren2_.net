@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MagicTheGatheringManagement.Domain;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace MTGM.BL.Domain;
 
@@ -9,10 +11,9 @@ public class Card
     
     public Card()
     {
-        
     }
     public Card(string name, CardType type, CardAbility? cardAbility, CardColour cardColour, int manaCost,
-        double price, string description, bool isFoil, List<DeckEntry> deck = null, List<SetEntry> set = null)
+        double price, string description, bool isFoil, IdentityUser user, List<DeckEntry> deck = null, List<SetEntry> set = null)
     {
         Name = name;
         Type = type;
@@ -22,6 +23,7 @@ public class Card
         Price = price;
         Description = description;
         IsFoil = isFoil;
+        User = user;
         DeckEntries = deck ?? new List<DeckEntry>();
         SetEntries = set ?? new List<SetEntry>();
     }
@@ -42,4 +44,5 @@ public class Card
     public double Price { get; set; }
     public string Description { get; set; }
     public bool IsFoil { get; set; }
+    public IdentityUser User { get; set; }
 }

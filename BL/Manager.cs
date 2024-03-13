@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using MagicTheGatheringManagement.Domain;
+using Microsoft.AspNetCore.Identity;
 using MTGM.BL.Domain;
 using MTGM.DAL;
 
@@ -51,9 +52,9 @@ public class Manager : IManager
 
     public Card AddCard(string name, CardType type, CardAbility? cardAbilities, CardColour cardColours, int manaCost,
         double price,
-        string description, bool isFoil)
+        string description, bool isFoil, IdentityUser user)
     {
-        Card card = new Card(name, type, cardAbilities, cardColours, manaCost, price, description, isFoil);
+        Card card = new Card(name, type, cardAbilities, cardColours, manaCost, price, description, isFoil, user);
         ValidateObject(card);
         _repository.CreateCard(card);
         return card;

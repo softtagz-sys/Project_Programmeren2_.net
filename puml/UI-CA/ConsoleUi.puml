@@ -1,0 +1,20 @@
+@startuml
+class ConsoleUi {
+    + ConsoleUi(manager:IManager)
+    + Run() : void
+    - ShowAllCards() : void
+    - ShowCardsOfType() : void
+    - ShowCardsOfType(cardType:CardType) : void
+    - ShowAllSets() : void
+    - ShowAllDecks() : void
+    - ShowDecksByNameAndOrDate() : void
+    - AddCard() : void
+    - AddDeck() : void
+    - AddSet() : void
+    - AddCardToDeck() : void
+    - AddCardToSet() : void
+    - RemoveCardFromSet() : void
+    - RemoveCardFromDeck() : void
+}
+ConsoleUi --> "_manager" IManager
+@enduml

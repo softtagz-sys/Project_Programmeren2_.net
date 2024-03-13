@@ -1,0 +1,37 @@
+@startuml
+class RegisterModel {
+    + RegisterModel(userManager:UserManager<IdentityUser>, userStore:IUserStore<IdentityUser>, signInManager:SignInManager<IdentityUser>, logger:ILogger<RegisterModel>, emailSender:IEmailSender)
+    + ReturnUrl : string <<get>> <<set>>
+    + <<async>> OnGetAsync(returnUrl:string) : Task
+    + <<async>> OnPostAsync(returnUrl:string) : Task<IActionResult>
+    - CreateUser() : IdentityUser
+    - GetEmailStore() : IUserEmailStore<IdentityUser>
+}
+class "SignInManager`1"<T> {
+}
+class "UserManager`1"<T> {
+}
+class "IUserStore`1"<T> {
+}
+class "IUserEmailStore`1"<T> {
+}
+class "ILogger`1"<T> {
+}
+class "IList`1"<T> {
+}
+class InputModel {
+    + Email : string <<get>> <<set>>
+    + Password : string <<get>> <<set>>
+    + ConfirmPassword : string <<get>> <<set>>
+}
+PageModel <|-- RegisterModel
+RegisterModel --> "_signInManager<IdentityUser>" "SignInManager`1"
+RegisterModel --> "_userManager<IdentityUser>" "UserManager`1"
+RegisterModel --> "_userStore<IdentityUser>" "IUserStore`1"
+RegisterModel --> "_emailStore<IdentityUser>" "IUserEmailStore`1"
+RegisterModel --> "_logger<RegisterModel>" "ILogger`1"
+RegisterModel --> "_emailSender" IEmailSender
+RegisterModel --> "Input" InputModel
+RegisterModel --> "ExternalLogins<AuthenticationScheme>" "IList`1"
+RegisterModel +-- InputModel
+@enduml

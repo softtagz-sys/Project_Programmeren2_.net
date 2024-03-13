@@ -1,0 +1,16 @@
+@startuml
+class NewCardViewModel {
+    + Name : string <<get>> <<set>>
+    + CardAbility : CardAbility? <<get>> <<set>>
+    + ManaCost : int <<get>> <<set>>
+    + Price : double <<get>> <<set>>
+    + Description : string? <<get>> <<set>>
+    + IsFoil : bool <<get>> <<set>>
+}
+class "ICollection`1"<T> {
+}
+NewCardViewModel --> "Type" CardType
+NewCardViewModel --> "DeckEntries<DeckEntry>" "ICollection`1"
+NewCardViewModel --> "SetEntries<SetEntry>" "ICollection`1"
+NewCardViewModel --> "CardColour" CardColour
+@enduml

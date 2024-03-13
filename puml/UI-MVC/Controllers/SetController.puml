@@ -1,0 +1,10 @@
+@startuml
+class SetController {
+    + SetController(manager:IManager)
+    + Details(id:int) : IActionResult
+    + Index() : IActionResult
+    + Get() : IActionResult
+}
+Controller <|-- SetController
+SetController --> "_manager" IManager
+@enduml

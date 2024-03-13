@@ -1,0 +1,13 @@
+@startuml
+class LogoutModel {
+    + LogoutModel(signInManager:SignInManager<IdentityUser>, logger:ILogger<LogoutModel>)
+    + <<async>> OnPost(returnUrl:string) : Task<IActionResult>
+}
+class "SignInManager`1"<T> {
+}
+class "ILogger`1"<T> {
+}
+PageModel <|-- LogoutModel
+LogoutModel --> "_signInManager<IdentityUser>" "SignInManager`1"
+LogoutModel --> "_logger<LogoutModel>" "ILogger`1"
+@enduml
