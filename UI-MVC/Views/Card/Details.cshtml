@@ -31,7 +31,7 @@
     <div class="mb-3 row">
         <label for="mana-cost-input" class="col-sm-2 fw-bold">ManaCost</label>
         
-        @if(User.Identity is { IsAuthenticated: true })
+        @if(User.Identity is { IsAuthenticated: true } && User.Identity.Name == Model.User?.UserName)
         {
             <input id="mana-cost-input" class="col-sm-10" type="number" value="@Model.ManaCost">
         }
@@ -59,7 +59,7 @@
         <label for="owner-label" class="col-sm-2 fw-bold">Managed by</label>
         <span id="owner-label" class="col-sm-10">@(Model.User?.UserName ?? "unknown")</span>
     </div>
-    @if (User.Identity is { IsAuthenticated: true })
+    @if (User.Identity is { IsAuthenticated: true } && User.Identity.Name == Model.User?.UserName)
     {
         <button id="update-button" type="button" class="btn btn-primary" data-id="@Model.Id">Update</button>
     }
