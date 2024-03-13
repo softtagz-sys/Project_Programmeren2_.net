@@ -13,6 +13,7 @@ public interface IRepository
     public Card ReadCardWithDecksAndSets(int id);
     public Card ReadCardWithDecksAndSetsAndUsers(int id);
     public void CreateCard(Card card);
+    public void UpdateCard(Card card);
     
     public Deck ReadDeck(int id);
     public IEnumerable<Deck> ReadAllDecks();

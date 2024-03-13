@@ -29,8 +29,16 @@
         <span id="card-colour-label" class="col-sm-10">@Model.CardColour.ToString()</span>
     </div>
     <div class="mb-3 row">
-        <label for="mana-cost-label" class="col-sm-2 fw-bold">ManaCost</label>
-        <span id="mana-cost-label" class="col-sm-10">@Model.ManaCost</span>
+        <label for="mana-cost-input" class="col-sm-2 fw-bold">ManaCost</label>
+        
+        @if(User.Identity is { IsAuthenticated: true })
+        {
+            <input id="mana-cost-input" class="col-sm-10" type="number" value="@Model.ManaCost">
+        }
+        else
+        {
+            <span id="mana-cost-input" class="col-sm-10">@Model.ManaCost</span>
+        }
     </div>
     <div class="mb-3 row">
         <label for="is-foil-label" class="col-sm-2 fw-bold">IsFoil</label>
@@ -48,9 +56,13 @@
         <span id="description-label" class="col-sm-10">@(Model.Description ?? "unknown")</span>
     </div>
     <div class="mb-3 row">
-            <label for="owner-label" class="col-sm-2 fw-bold">Owned by</label>
-            <span id="owner-label" class="col-sm-10">@(Model.User?.UserName ?? "unknown")</span>
+        <label for="owner-label" class="col-sm-2 fw-bold">Managed by</label>
+        <span id="owner-label" class="col-sm-10">@(Model.User?.UserName ?? "unknown")</span>
     </div>
+    @if (User.Identity is { IsAuthenticated: true })
+    {
+        <button id="update-button" type="button" class="btn btn-primary" data-id="@Model.Id">Update</button>
+    }
 </section>
 <section>
     <h2>Decks</h2>
@@ -62,7 +74,7 @@
         <th></th>
         @if (Model.DeckEntries != null)
         {
-            foreach (DeckEntry deckEntry in Model.DeckEntries)
+            foreach (var deckEntry in Model.DeckEntries)
             {
                 if (deckEntry.Deck != null)
                 {
@@ -104,3 +116,8 @@
         }
     </table>
 </section>
+
+@section Scripts
+{
+    <script src="~/js/card/detail.js" defer=""></script>
+}

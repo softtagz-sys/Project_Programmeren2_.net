@@ -3,6 +3,9 @@ using MTGM.BL;
 using MTGM.UI.MVC.Models.Dto;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using MTGM.BL.Domain;
 
 namespace MTGM.UI.MVC.Controllers.Api
 {
@@ -46,6 +49,32 @@ namespace MTGM.UI.MVC.Controllers.Api
             {
                 return StatusCode(500, "An error occurred while processing your request.");
             }
+        }
+        
+        [HttpPut("{id:int}")]
+        public Task<IActionResult> UpdateCardManaCost(int id, [FromBody] Card card)
+        {
+            if (User.Identity is { IsAuthenticated: false })
+            {
+                return Task.FromResult<IActionResult>(Unauthorized());
+            }
+
+            var existingCard = _manager.GetCard(id);
+            if (existingCard == null)
+            {
+                return Task.FromResult<IActionResult>(NotFound());
+            }
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (existingCard.UserId != userId)
+            {
+                return Task.FromResult<IActionResult>(Forbid());
+            }
+
+            existingCard.ManaCost = card.ManaCost;
+            _manager.UpdateCard(existingCard);
+
+            return Task.FromResult<IActionResult>(Ok(existingCard));
         }
     }
 }

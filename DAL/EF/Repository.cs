@@ -62,6 +62,12 @@ namespace MTGM.DAL.EF
             _context.Cards.Add(card);
             _context.SaveChanges();
         }
+        
+        public void UpdateCard(Card card)
+        {
+            _context.Cards.Update(card);
+            _context.SaveChanges();
+        }
 
         public Deck ReadDeck(int id)
         {

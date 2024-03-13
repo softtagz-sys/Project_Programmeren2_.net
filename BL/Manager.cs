@@ -54,6 +54,13 @@ public class Manager : IManager
         _repository.CreateCard(card);
         return card;
     }
+    
+    public Card UpdateCard(Card card)
+    {
+        ValidateObject(card);
+        _repository.UpdateCard(card);
+        return card;
+    }
 
     public Deck GetDeck(int id)
     {

@@ -14,6 +14,7 @@ public interface IManager
     public Card GetCardWithSetsAndDecksAndUsers(int id);
     public Card AddCard(string name, CardType type, CardAbility? cardAbilities, CardColour cardColours, int manaCost,
         double price, string description, bool isFoil, IdentityUser user);
+    public Card UpdateCard(Card card);
     
     public Deck GetDeck(int id);
     public IEnumerable<Deck> GetAllDecks();

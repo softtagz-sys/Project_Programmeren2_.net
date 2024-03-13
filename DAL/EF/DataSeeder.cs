@@ -38,7 +38,7 @@ public static class DataSeeder
             0.12,
             "Spell you cast that target Elderwoorth Scion cost 2 less to cast. Spells your opponents cast that target Elderwoorth Scion cost 2 more to cast.",
             true,
-            context.Users.Single(u => u.UserName == "jef@kdg.be")));
+            context.Users.Single(u => u.UserName == "kobe@kdg.be")));
         _cards.Add( new Card("Windstorm Drake",
             CardType.Creature,
             CardAbility.Flying,
@@ -47,7 +47,7 @@ public static class DataSeeder
             0.08,
             "Other creatures you control with flying get +1/+0.",
             false,
-            context.Users.Single(u => u.UserName == "jef@kdg.be")));
+            context.Users.Single(u => u.UserName == "kobe@kdg.be")));
         _cards.Add( new Card("Unbreakable Formation",
             CardType.Instant,
             null!,

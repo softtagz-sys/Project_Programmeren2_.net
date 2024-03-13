@@ -70,6 +70,11 @@ public class InMemoryRepository : IRepository
         _cards.Add(card);
     }
 
+    public void UpdateCard(Card card)
+    {
+        throw new NotImplementedException();
+    }
+
     public Deck ReadDeck(int id)
     {
         return _decks.FirstOrDefault(deck => deck.Id == id);
