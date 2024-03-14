@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using MTGM.BL;
 using MTGM.DAL;
 using MTGM.DAL.EF;
-using UI_MVC.Controllers;
 using Microsoft.AspNetCore.Identity;
+using MTGM.UI.MVC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +13,34 @@ builder.Services.AddControllersWithViews();
 // Add DbContext, Repository and Manager to the service container
 builder.Services.AddDbContext<MtgmDbContext>(options => options.UseSqlite("Data Source=MTGM.db"));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<MtgmDbContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<MtgmDbContext>();
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IManager, Manager>();
+
+builder.Services.ConfigureApplicationCookie(cfg =>
+{
+    cfg.Events.OnRedirectToLogin += ctx =>
+    {
+        if (ctx.Request.Path.StartsWithSegments("/api"))
+        {
+            ctx.Response.StatusCode = 401;
+        }
+
+        return Task.CompletedTask;
+    };
+
+    cfg.Events.OnRedirectToAccessDenied += ctx =>
+    {
+        if (ctx.Request.Path.StartsWithSegments("/api"))
+        {
+            ctx.Response.StatusCode = 403;
+        }
+
+        return Task.CompletedTask;
+    };
+});
 
 var app = builder.Build();
 
@@ -26,8 +51,10 @@ using (var scope = app.Services.CreateScope())
     {
         var userManager = scope.ServiceProvider
             .GetRequiredService<UserManager<IdentityUser>>();
-        SeedIdentity(userManager);
-        
+        var roleManager = scope.ServiceProvider
+            .GetRequiredService<RoleManager<IdentityRole>>();
+        SeedIdentity(userManager, roleManager);
+
         DataSeeder.Seed(context);
     }
 }
@@ -56,8 +83,19 @@ app.MapRazorPages();
 app.Run();
 return;
 
-void SeedIdentity(UserManager<IdentityUser> userManager)
+void SeedIdentity(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
 {
+    var userRole = new IdentityRole
+    {
+        Name = CustomIdentityConstants.UserRole
+    };
+    roleManager.CreateAsync(userRole).Wait();
+    var adminRole = new IdentityRole
+    {
+        Name = CustomIdentityConstants.AdminRole
+    };
+    roleManager.CreateAsync(adminRole).Wait();
+
     var kobe = new IdentityUser
     {
         Email = "kobe@kdg.be",
@@ -72,4 +110,7 @@ void SeedIdentity(UserManager<IdentityUser> userManager)
         EmailConfirmed = true
     };
     userManager.CreateAsync(jef, "Password1!").Wait();
+
+    userManager.AddToRoleAsync(kobe, CustomIdentityConstants.AdminRole);
+    userManager.AddToRoleAsync(jef, CustomIdentityConstants.UserRole);
 }

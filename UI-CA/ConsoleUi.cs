@@ -3,6 +3,7 @@ using System.Net.NetworkInformation;
 using System.Security.AccessControl;
 using MagicTheGatheringManagement.Domain;
 using MagicTheGatheringManagement.Extensions;
+using Microsoft.AspNetCore.Identity;
 using MTGM.BL;
 using MTGM.BL.Domain;
 
@@ -278,7 +279,7 @@ public class ConsoleUi
                 return;
             }
             
-            _manager.AddCard(name, type, cardAbilty, cardColours, manaCost, price, description, isFoil);
+            _manager.AddCard(name, type, cardAbilty, cardColours, manaCost, price, description, isFoil, IdentityUser);
             
         }
         else
@@ -287,9 +288,10 @@ public class ConsoleUi
         }
     }
 
+    public IdentityUser IdentityUser { get; set; }
 
-    
-   private void AddDeck()
+
+    private void AddDeck()
    {
        Console.WriteLine("Deck Name: ");
        var deckName = Console.ReadLine();
