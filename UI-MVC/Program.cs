@@ -114,3 +114,7 @@ void SeedIdentity(UserManager<IdentityUser> userManager, RoleManager<IdentityRol
     userManager.AddToRoleAsync(kobe, CustomIdentityConstants.AdminRole);
     userManager.AddToRoleAsync(jef, CustomIdentityConstants.UserRole);
 }
+
+public partial class Program
+{
+}

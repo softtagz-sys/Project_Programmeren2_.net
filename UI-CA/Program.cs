@@ -21,7 +21,7 @@ public class Program
         ConsoleUi consoleUi = new ConsoleUi(manager);
 
         //InMemoryRepository.Seed();
-        if (ctx.CreateDatabase(true))
+        if (ctx.CreateDatabase())
         {
             DataSeeder.Seed(ctx);
         }
