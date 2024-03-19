@@ -16,6 +16,9 @@ cache:
 before_script:
   - 'dotnet restore --packages $NUGET_PACKAGES_DIRECTORY'
 
+test_job:
+  script: echo "This is a test job"
+  
 build:
   stage: build
   script:
