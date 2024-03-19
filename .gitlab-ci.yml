@@ -1,30 +1,18 @@
-﻿image: mcr.microsoft.com/dotnet/sdk:latest
+﻿image: mcr.microsoft.com/dotnet/sdk:7.0
 
-# ### Define variables
-#
 variables:
-  # 1) Name of directory where restore and build objects are stored.
   OBJECTS_DIRECTORY: 'obj'
-  # 2) Name of directory used for keeping restored dependencies.
   NUGET_PACKAGES_DIRECTORY: '.nuget'
-  # 3) A relative path to the source code from project repository root.
   SOURCE_CODE_PATH: '*/'
 
 cache:
-  # Per-stage and per-branch caching.
-  key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
+  key: "$CI_COMMIT_REF_SLUG"
   paths:
-    # Specify three paths that should be cached:
-    #
-    # 1) Main JSON file holding information about package dependency tree, packages versions,
-    # frameworks etc. It also holds information where to the dependencies were restored.
     - '$SOURCE_CODE_PATH$OBJECTS_DIRECTORY/project.assets.json'
-    # 2) Other NuGet and MSBuild related files. Also needed.
     - '$SOURCE_CODE_PATH$OBJECTS_DIRECTORY/*.csproj.nuget.*'
-    # 3) Path to the directory where restored dependencies are kept.
     - '$NUGET_PACKAGES_DIRECTORY'
-  
   policy: pull-push
+
 before_script:
   - 'dotnet restore --packages $NUGET_PACKAGES_DIRECTORY'
 
@@ -36,13 +24,15 @@ build:
 tests:
   stage: test
   script:
-    - 'dotnet test --no-restore --collect:"XPlat Code Coverage"'
+    - 'dotnet test --no-restore --collect:"XPlat Code Coverage" --logger junit'
     - 'dotnet tool install dotnet-reportgenerator-globaltool
       --tool-path tools --version 5.2.3'
     - './tools/reportgenerator
       -reports:"Tests/TestResults/*/coverage.cobertura.xml"
       -targetdir:"coveragereport" -reporttypes:Html'
   artifacts:
+    when: always
+    reports:
+      junit: Tests/TestResults/TestResults.xml
     paths:
       - coveragereport
-
