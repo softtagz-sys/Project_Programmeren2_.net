@@ -27,6 +27,5 @@ public class CardsControllerTests : IClassFixture<CustomWebApplicationFactoryWit
         var responseString = await response.Content.ReadAsStringAsync();
         var data = JsonConvert.DeserializeObject<List<CardDto>>(responseString);
         Assert.NotNull(data);
-        // Add more assertions here based on the expected data
     }
 }

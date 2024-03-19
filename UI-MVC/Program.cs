@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Add DbContext, Repository and Manager to the service container
-builder.Services.AddDbContext<MtgmDbContext>(options => options.UseSqlite("Data Source=MTGM.db"));
+//builder.Services.AddDbContext<MtgmDbContext>(options => options.UseSqlite("Data Source=MTGM.db"));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()

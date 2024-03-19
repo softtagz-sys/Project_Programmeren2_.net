@@ -7,6 +7,12 @@
       "commands": [
         "puml-gen"
       ]
+    },
+    "dotnet-reportgenerator-globaltool": {
+      "version": "5.2.3",
+      "commands": [
+        "reportgenerator"
+      ]
     }
   }
 }

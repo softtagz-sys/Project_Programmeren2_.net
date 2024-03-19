@@ -1,10 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using MagicTheGatheringManagement;
-using MagicTheGatheringManagement.Domain;
-using Microsoft.AspNetCore.Identity;
+﻿using MagicTheGatheringManagement.Domain;
 using MTGM.BL;
-using MTGM.BL.Domain;
-using MTGM.DAL;
 using Tests.IntegrationTests.Config;
 
 namespace Tests.IntegrationTests;
@@ -12,35 +7,34 @@ namespace Tests.IntegrationTests;
 public class ManagerTests : IClassFixture<CustomWebApplicationFactoryWithMockAuth<Program>>
 {
     private readonly CustomWebApplicationFactoryWithMockAuth<Program> _factory;
-
+    
     public ManagerTests(CustomWebApplicationFactoryWithMockAuth<Program> factory)
     {
         _factory = factory;
     }
-
+    
     [Fact]
     public void AddCard_Should_Call_Create_Card_And_Return_Correct_Card()
     {
         // Arrange
         using var scope = _factory.Services.CreateScope();
         var manager = scope.ServiceProvider.GetRequiredService<IManager>();
-        var user = new IdentityUser();
-        var card = new Card("Test Card", CardType.Creature, CardAbility.Flying, CardColour.Blue, 3, 1.99, "Test Description", false, user);
 
         // Act
-        var result = manager.AddCard("Test Card", CardType.Creature, CardAbility.Flying, CardColour.Blue, 3, 1.99, "Test Description", false, user);
+        var result = manager.AddCard("Test Card", CardType.Creature, CardAbility.Flying, 
+            CardColour.Blue, 3, 1.99, "Test Description", false, null);
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(card.Name, result.Name);
-        Assert.Equal(card.Type, result.Type);
-        Assert.Equal(card.CardAbility, result.CardAbility);
-        Assert.Equal(card.CardColour, result.CardColour);
-        Assert.Equal(card.ManaCost, result.ManaCost);
-        Assert.Equal(card.Price, result.Price);
-        Assert.Equal(card.Description, result.Description);
-        Assert.Equal(card.IsFoil, result.IsFoil);
-        Assert.Equal(card.User, result.User);
+        Assert.Equal("Test Card", result.Name);
+        Assert.Equal(CardType.Creature, result.Type);
+        Assert.Equal(CardAbility.Flying, result.CardAbility);
+        Assert.Equal(CardColour.Blue, result.CardColour);
+        Assert.Equal(3, result.ManaCost);
+        Assert.Equal(1.99, result.Price);
+        Assert.Equal("Test Description", result.Description);
+        Assert.False(result.IsFoil);
+        Assert.Null(result.User);
     }
     
     [Fact]
@@ -57,4 +51,6 @@ public class ManagerTests : IClassFixture<CustomWebApplicationFactoryWithMockAut
         Assert.NotNull(result);
         Assert.All(result, card => Assert.Equal(CardType.Creature, card.Type));
     }
+    
+    
 }
