@@ -7,19 +7,9 @@ namespace MTGM.DAL.EF;
 
 public static class DataSeeder
 {
-    private static readonly IList<Set> _sets;
-    private static readonly IList<SetEntry> _setEntries;
-    private static readonly IList<Card> _cards;
-    private static readonly IList<DeckEntry> _deckEntries;
-    private static readonly IList<Deck> _decks;
     
     static DataSeeder()
     {
-        _sets = new List<Set>();
-        _setEntries = new List<SetEntry>();
-        _cards = new List<Card>();
-        _deckEntries = new List<DeckEntry>();
-        _decks = new List<Deck>();
     }
     
     public static void Seed(MtgmDbContext context)
@@ -28,6 +18,12 @@ public static class DataSeeder
         {
             throw new ArgumentNullException(nameof(context));
         }
+        
+        IList<Set> _sets = new List<Set>();
+        IList<SetEntry> _setEntries = new List<SetEntry>();
+        IList<Card> _cards = new List<Card>();
+        IList<DeckEntry> _deckEntries = new List<DeckEntry>();
+        IList<Deck> _decks = new List<Deck>();
         
         
         _cards.Add( new Card("Elderwoorth Scion",
