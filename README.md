@@ -113,3 +113,15 @@ Cookie: .AspNetCore.Identity.Application=CfDJ8H9KMD2CQ61Gtuxgcoy7Jc3h_yWXu_nXvFe
 ```http request
 Response code: 201 (Created); Time: 121ms (121 ms); Content length: 76 bytes (76 B)
 ```
+
+## Sprint 8
+
+```shell
+dotnet test
+```
+
+![Test tablet](https://gitlab.com/kdg-ti/programmeren-2---.net/23-24/inf203/projecten/kobe.ponet/-/pipelines/1225166015/test_report)
+
+![code coverage](./readme_content/coverage.png)
+
+![code coverage report](https://kdg-ti.gitlab.io/-/programmeren-2---.net/23-24/inf203/projecten/kobe.ponet/-/jobs/6463212110/artifacts/coveragereport/index.html)
